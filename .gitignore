@@ -55,4 +55,6 @@ dkms.conf
 *.dwo
 
 # build files
-*/build
+*/build/
+# smart-fridge/build/
+
