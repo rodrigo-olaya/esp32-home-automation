@@ -13,12 +13,27 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 #include "onewire.h"
+#include "ds18x20.h"
+#include <inttypes.h>
+
+#define GPIO_NUM 13
 
 void app_main(void)
 {
     printf("Hello world!\n");
 
+    float temperature;
 
+    onewire_addr_t addr_list[4];
+    size_t found = 0;
+
+    ds18x20_scan_devices(GPIO_NUM, addr_list, sizeof(addr_list), &found);
+
+    printf("%" PRIx64 "\n", addr_list[0]);
+
+    ds18b20_read_temperature(GPIO_NUM, addr_list[0], &temperature);
+
+    printf("Temperature: %.2f\n", temperature);
 
     // /* Print chip information */
     // esp_chip_info_t chip_info;
