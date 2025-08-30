@@ -1,4 +1,30 @@
 dependencies:
+  esp-idf-lib/ds18x20:
+    component_hash: b907d03835d6b2ea3521bb04d54547e1f1d6d16e19c1096df8cd0ba7b8b56c7f
+    dependencies:
+    - name: esp-idf-lib/esp_idf_lib_helpers
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
+    - name: esp-idf-lib/onewire
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    targets:
+    - esp32
+    - esp32c2
+    - esp32c3
+    - esp32c5
+    - esp32c6
+    - esp32c61
+    - esp32h2
+    - esp32p4
+    - esp32s2
+    - esp32s3
+    version: 1.2.8
   esp-idf-lib/esp_idf_lib_helpers:
     component_hash: a8049b1e609679fb54b2d57b0399dd29c4d1fda09a797edac9926f7810aa5703
     dependencies: []
@@ -44,8 +70,9 @@ dependencies:
       type: idf
     version: 5.5.0
 direct_dependencies:
+- esp-idf-lib/ds18x20
 - esp-idf-lib/onewire
 - idf
-manifest_hash: ebd39f9258f7cb14d61146afede081809e301fb125ecff4d6d3be490d520636f
+manifest_hash: 64954f5bdc80557940629d327e908a26069e862b70ddcf68d415328ef702dd89
 target: esp32
 version: 2.0.0
