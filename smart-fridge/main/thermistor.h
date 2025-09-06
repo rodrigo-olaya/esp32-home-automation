@@ -11,6 +11,6 @@
 #define GPIO_NUM 4
 
 // Straight form FreeRTOS book
-QueueHandle_t xQueue;
+extern QueueHandle_t xQueue;
 
 void read_temperature (void *pvParameters);

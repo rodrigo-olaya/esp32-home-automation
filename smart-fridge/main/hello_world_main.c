@@ -18,7 +18,7 @@
 #include "esp_mac.h"
 #include "thermistor.h"
 
-
+QueueHandle_t xQueue;
 
 // /* This function was borrowed from FreeRTOS book as a template*/
 // static void vSenderTask( void *pvParameters )
@@ -61,9 +61,9 @@ static void vReceiverTask( void *pvParameters )
 {
 /* Declare the variable that will hold the values received from the
 queue. */
-int32_t lReceivedValue;
+float lReceivedValue;
 BaseType_t xStatus;
-const TickType_t xTicksToWait = pdMS_TO_TICKS( 100 );
+const TickType_t xTicksToWait = pdMS_TO_TICKS( 100000 );
 /* This task is also defined within an infinite loop. */
 for( ;; )
 {
@@ -90,7 +90,7 @@ for( ;; )
         /* Data was successfully received from the queue, print out the
         received value. */
         // vPrintStringAndNumber( "Received = ", lReceivedValue );
-        printf("Number: %ld\n", lReceivedValue);
+        printf("Number: %.2f\n", lReceivedValue);
     }
     else
     {
@@ -105,7 +105,7 @@ for( ;; )
 void app_main(void)
 {
 
-    xQueue = xQueueCreate( 5, sizeof( int32_t ) );
+    xQueue = xQueueCreate( 5, sizeof( float ) );
 
     if( xQueue != NULL ) {
         /* Create two instances of the task that will send to the queue. The
@@ -126,8 +126,8 @@ void app_main(void)
 
     
 
-    vTaskDelay(500 / portTICK_PERIOD_MS);
+    // vTaskDelay(500 / portTICK_PERIOD_MS);
 
-    fflush(stdout);
-    esp_restart();
+    // fflush(stdout);
+    // esp_restart();
 }

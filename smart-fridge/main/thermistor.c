@@ -1,5 +1,7 @@
 #include "thermistor.h"
 
+
+
 void read_temperature (void *pvParameters) {
 
     float temperature;
@@ -69,7 +71,7 @@ void read_temperature (void *pvParameters) {
                 // vPrintString( "Could not send to the queue.\r\n" );
                 printf("Could not send data to the queue.\n");
             }
-        // vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
         }
     }
 }
