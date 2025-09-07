@@ -16,7 +16,7 @@
 #include <inttypes.h>
 #include <portmacro.h>
 #include "esp_mac.h"
-#include "thermistor.h"
+#include "sensors/thermistor.h"
 
 QueueHandle_t xQueue;
 
