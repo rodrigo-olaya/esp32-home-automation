@@ -1,7 +1,5 @@
 #include "thermistor.h"
 
-
-
 void read_temperature (void *pvParameters) {
 
     float temperature;
@@ -30,15 +28,6 @@ void read_temperature (void *pvParameters) {
         return;
     }
 
-    // ret = ds18b20_read_temperature(GPIO_NUM, addr_list[0], &temperature);
-    // if (ret != ESP_OK) {
-    //     printf("Error reading temp: %X\n", ret);
-    //     return;
-    // }
-    // else {
-    //     printf("Temperature: %.2f\n", temperature);
-    // }
-
     BaseType_t xStatus;
 
     for( ;; )
@@ -61,14 +50,12 @@ void read_temperature (void *pvParameters) {
             return;
         }
         else {
-            // printf("Temperature: %.2f\n", temperature);
             xStatus = xQueueSendToBack( xQueue, &temperature, 0 );
             if( xStatus != pdPASS )
             {
                 /* The send operation could not complete because the queue was full-
                 this must be an error as the queue should never contain more than
                 one item! */
-                // vPrintString( "Could not send to the queue.\r\n" );
                 printf("Could not send data to the queue.\n");
             }
         vTaskDelay(10000 / portTICK_PERIOD_MS);
