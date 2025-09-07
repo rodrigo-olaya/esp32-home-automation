@@ -10,6 +10,6 @@
 
 #define GPIO_NUM 4
 
-extern QueueHandle_t xQueue;
+extern QueueHandle_t xSensorDataQueue;
 
 void read_temperature (void *pvParameters);

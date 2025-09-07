@@ -9,6 +9,6 @@
 #include "freertos/queue.h"
 #include "../communication/queues.h"
 
-extern QueueHandle_t xQueue;
+extern QueueHandle_t xSensorDataQueue;
 
 void vReceiverTask( void *pvParameters );

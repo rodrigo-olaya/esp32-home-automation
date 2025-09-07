@@ -1,3 +1,3 @@
 #include "queues.h"
 
-QueueHandle_t xQueue;
+QueueHandle_t xSensorDataQueue;

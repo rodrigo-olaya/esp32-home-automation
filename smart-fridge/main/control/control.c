@@ -12,7 +12,7 @@ void vReceiverTask( void *pvParameters )
     {
         /* This call should always find the queue empty because this task will
         immediately remove any data that is written to the queue. */
-        if( uxQueueMessagesWaiting( xQueue ) != 0 )
+        if( uxQueueMessagesWaiting( xSensorDataQueue ) != 0 )
         {
             printf("Queue should have been empty!\n");
         }
@@ -26,7 +26,7 @@ void vReceiverTask( void *pvParameters )
         The last parameter is the block time – the maximum amount of time
         that the task will remain in the Blocked state to wait for data to
         be available should the queue already be empty. */
-        xStatus = xQueueReceive( xQueue, &lReceivedValue, xTicksToWait );
+        xStatus = xQueueReceive( xSensorDataQueue, &lReceivedValue, xTicksToWait );
         if( xStatus == pdPASS )
         {
             /* Data was successfully received from the queue, print out the

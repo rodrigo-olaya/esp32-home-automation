@@ -50,7 +50,7 @@ void read_temperature (void *pvParameters) {
             return;
         }
         else {
-            xStatus = xQueueSendToBack( xQueue, &temperature, 0 );
+            xStatus = xQueueSendToBack( xSensorDataQueue, &temperature, 0 );
             if( xStatus != pdPASS )
             {
                 /* The send operation could not complete because the queue was full-

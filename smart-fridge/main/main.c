@@ -20,13 +20,13 @@
 #include "control/control.h"
 #include "communication/queues.h"
 
-extern QueueHandle_t xQueue;
+extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    xQueue = xQueueCreate( 5, sizeof( float ) );
+    xSensorDataQueue = xQueueCreate( 5, sizeof( float ) );
 
-    if( xQueue != NULL ) {
+    if( xSensorDataQueue != NULL ) {
         /* Create the task that will read the thermistor data and send it to the receiver */
         xTaskCreate( read_temperature, "Sender1", 4000, NULL, 1, NULL );
         /* Create the task that will read from the queue. The task is created
