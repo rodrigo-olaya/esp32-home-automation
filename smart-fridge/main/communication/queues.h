@@ -3,7 +3,7 @@
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "onewire.h"
-#include "ds18x20.h"
-#include <portmacro.h>
 #include "freertos/queue.h"
+#include "../control/control.h"
+
+uint8_t queues_init();
