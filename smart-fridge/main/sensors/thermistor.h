@@ -6,10 +6,8 @@
 #include "onewire.h"
 #include "ds18x20.h"
 #include <portmacro.h>
-#include "freertos/queue.h"
+#include "../communication/sensors.h"
 
 #define GPIO_NUM 4
-
-extern QueueHandle_t xSensorDataQueue;
 
 void read_temperature (void *pvParameters);

@@ -28,37 +28,16 @@ void read_temperature (void *pvParameters) {
         return;
     }
 
-    BaseType_t xStatus;
-
     for( ;; )
-    {
-        /* Send the value to the queue.
-        The first parameter is the queue to which data is being sent. The
-        queue was created before the scheduler was started, so before this
-        task started to execute.
-        The second parameter is the address of the data to be sent, in this
-        case the address of lValueToSend.
-        The third parameter is the Block time – the time the task should be
-        kept in the Blocked state to wait for space to become available on
-        the queue should the queue already be full. In this case a block
-        time is not specified because the queue should never contain more
-        than one item, and therefore never be full. */
-
-        ret = ds18b20_read_temperature(GPIO_NUM, addr_list[0], &temperature);
-        if (ret != ESP_OK) {
-            printf("Error reading temp: %X\n", ret);
-            return;
-        }
-        else {
-            xStatus = xQueueSendToBack( xSensorDataQueue, &temperature, 0 );
-            if( xStatus != pdPASS )
-            {
-                /* The send operation could not complete because the queue was full-
-                this must be an error as the queue should never contain more than
-                one item! */
-                printf("Could not send data to the queue.\n");
+        {
+            ret = ds18b20_read_temperature(GPIO_NUM, addr_list[0], &temperature);
+            if (ret != ESP_OK) {
+                printf("Error reading temp: %X\n", ret);
+                return;
             }
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
+            else {
+                sensor_send_data(&temperature);
+                vTaskDelay(10000 / portTICK_PERIOD_MS);
+            }
         }
-    }
 }
