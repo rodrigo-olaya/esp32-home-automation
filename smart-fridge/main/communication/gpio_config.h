@@ -3,7 +3,5 @@
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "onewire.h"
-#include "ds18x20.h"
-#include <portmacro.h>
-#include "freertos/queue.h"
+
+#define FF_THERMISTOR_GPIO 4

@@ -8,6 +8,4 @@
 #include <portmacro.h>
 #include "../communication/sensors.h"
 
-#define GPIO_NUM 4
-
 void read_temperature (void *pvParameters);

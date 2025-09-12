@@ -1,4 +1,5 @@
 #include "thermistor.h"
+#include "../communication/gpio_config.h"
 
 void read_temperature (void *pvParameters) {
 
@@ -7,7 +8,7 @@ void read_temperature (void *pvParameters) {
     onewire_addr_t addr_list[4];
     size_t found = 0;
 
-    esp_err_t ret = ds18x20_scan_devices(GPIO_NUM, addr_list, sizeof(addr_list), &found);
+    esp_err_t ret = ds18x20_scan_devices(FF_THERMISTOR_GPIO, addr_list, sizeof(addr_list), &found);
 
     if (ret != ESP_OK) {
         printf("Error finding devices: %X\n", ret);
@@ -22,7 +23,7 @@ void read_temperature (void *pvParameters) {
         printf("\n");
     }
 
-    ret = ds18x20_measure(GPIO_NUM, addr_list[0], true);
+    ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
     if (ret != ESP_OK) {
         printf("Scan failed: 0x%X (%s)\n", ret, esp_err_to_name(ret));
         return;
@@ -30,7 +31,7 @@ void read_temperature (void *pvParameters) {
 
     for( ;; )
         {
-            ret = ds18b20_read_temperature(GPIO_NUM, addr_list[0], &temperature);
+            ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
             if (ret != ESP_OK) {
                 printf("Error reading temp: %X\n", ret);
                 return;
