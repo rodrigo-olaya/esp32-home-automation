@@ -16,3 +16,4 @@ dependencies:
   #   public: true
   esp-idf-lib/onewire: '*'
   esp-idf-lib/ds18x20: '*'
+  espressif/mosquitto: '*'
