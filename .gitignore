@@ -58,3 +58,13 @@ dkms.conf
 *build/
 smart-fridge/build/*
 
+pi4/HomeAssistant/.cloud
+pi4/HomeAssistant/.storage
+pi4/HomeAssistant/blueprints
+pi4/HomeAssistant/deps
+pi4/HomeAssistant/tts
+pi4/HomeAssistant/.HA_VERSION
+pi4/HomeAssistant/home-assistant*
+pi4/HomeAssistant/scenes.yaml
+pi4/HomeAssistant/scripts.yaml
+pi4/HomeAssistant/secrets.yaml
