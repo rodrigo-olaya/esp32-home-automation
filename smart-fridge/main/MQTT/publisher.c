@@ -3,7 +3,13 @@
 void publish_data() {
     mosquitto_lib_init();
 
-    mosquitto_new();
+    const char id = "mqtt_client";
+
+    struct mosquitto *mosquitto_ret = mosquitto_new(&id, true, NULL);
+    if (mosquitto_ret == NULL) {
+        // clean up if mosquitto client instance creation fails
+        mosquitto_lib_cleanup();
+    }
 
     mosquitto_connect();
 
