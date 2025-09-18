@@ -31,19 +31,34 @@ typedef struct {
 void app_main(void)
 {
     // Open file in read mode
-    FILE *file = fopen("JSON/private.json", "r");  
+    FILE *private_data= fopen("JSON/private.json", "r");  
 
-    if (file == NULL) {
+    if (private_data == NULL) {
         printf("Error!\n");
         return 1;
     }
 
+    /* Get the length of the file*/
+    fseek(private_data, 0, SEEK_END);
+    long len = ftell(private_data);
+    fseek(private_data, 0, SEEK_SET);
+
+    /* Create the data structure needed for the parsing API*/
+    char* data = (char*)malloc(len + 1);
+    fread(data, 1, len, private_data);
+    data[len] = '\0';
+
     printf("Successfull\n");
 
     // Close the file
-    fclose(file);  
+    fclose(private_data);  
 
-    cJSON *IP_addresses = cJSON_Parse();
+    cJSON *IP_addresses = cJSON_Parse(data);
+
+    free(data);
+
+    cJSON_Delete(IP_addresses);
+
     for(;;);
 
     /* Initialize the queues */
