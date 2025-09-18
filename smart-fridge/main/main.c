@@ -19,11 +19,33 @@
 #include "sensors/thermistor.h"
 #include "control/control.h"
 #include "communication/queues.h"
+#include <cJSON.h>
 
 extern QueueHandle_t xSensorDataQueue;
 
+typedef struct {
+    char pi4_ip[14];
+    uint16_t port;
+} MQTT_config;
+
 void app_main(void)
 {
+    // Open file in read mode
+    FILE *file = fopen("JSON/private.json", "r");  
+
+    if (file == NULL) {
+        printf("Error!\n");
+        return 1;
+    }
+
+    printf("Successfull\n");
+
+    // Close the file
+    fclose(file);  
+
+    cJSON *IP_addresses = cJSON_Parse();
+    for(;;);
+
     /* Initialize the queues */
     queues_init();
 
