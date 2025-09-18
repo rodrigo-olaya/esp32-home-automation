@@ -58,3 +58,9 @@ dkms.conf
 *build/
 smart-fridge/build/*
 
+# Private addresses
+smart-fridge/main/JSON/private.json
+
+# Managed components
+smart-fridge/managed_components/
+
