@@ -35,7 +35,7 @@ void app_main(void)
 
     if (private_data == NULL) {
         printf("Error!\n");
-        return 1;
+        return;
     }
 
     /* Get the length of the file*/
@@ -54,8 +54,16 @@ void app_main(void)
     fclose(private_data);  
 
     cJSON *IP_addresses = cJSON_Parse(data);
+    if (IP_addresses == NULL) {
+        printf("error\n");
+    }
 
     free(data);
+
+    const cJSON *pi4_ip = NULL;
+    pi4_ip = cJSON_GetObjectItemCaseSensitive(IP_addresses, "pi4_ip");
+
+    printf("%s", pi4_ip->valuestring);
 
     cJSON_Delete(IP_addresses);
 
