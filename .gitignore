@@ -60,6 +60,7 @@ smart-fridge/build/*
 
 # Private addresses
 smart-fridge/main/JSON/private.json
+smart-fridge/main/config/private_config.h
 
 # Managed components
 smart-fridge/managed_components/
