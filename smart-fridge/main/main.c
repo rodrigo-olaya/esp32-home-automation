@@ -20,55 +20,12 @@
 #include "control/control.h"
 #include "communication/queues.h"
 #include <cJSON.h>
+#include "esp_spiffs.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
-typedef struct {
-    char pi4_ip[14];
-    uint16_t port;
-} MQTT_config;
-
 void app_main(void)
 {
-    // Open file in read mode
-    FILE *private_data= fopen("JSON/private.json", "r");  
-
-    if (private_data == NULL) {
-        printf("Error!\n");
-        return;
-    }
-
-    /* Get the length of the file*/
-    fseek(private_data, 0, SEEK_END);
-    long len = ftell(private_data);
-    fseek(private_data, 0, SEEK_SET);
-
-    /* Create the data structure needed for the parsing API*/
-    char* data = (char*)malloc(len + 1);
-    fread(data, 1, len, private_data);
-    data[len] = '\0';
-
-    printf("Successfull\n");
-
-    // Close the file
-    fclose(private_data);  
-
-    cJSON *IP_addresses = cJSON_Parse(data);
-    if (IP_addresses == NULL) {
-        printf("error\n");
-    }
-
-    free(data);
-
-    const cJSON *pi4_ip = NULL;
-    pi4_ip = cJSON_GetObjectItemCaseSensitive(IP_addresses, "pi4_ip");
-
-    printf("%s", pi4_ip->valuestring);
-
-    cJSON_Delete(IP_addresses);
-
-    for(;;);
-
     /* Initialize the queues */
     queues_init();
 
