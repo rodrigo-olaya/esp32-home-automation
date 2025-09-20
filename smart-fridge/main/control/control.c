@@ -19,6 +19,7 @@ void vReceiverTask( void *pvParameters )
         if( xStatus == pdPASS )
         {
             printf("Number: %.2f\n", lReceivedValue);
+            publish_data();
         }
         else
         {
