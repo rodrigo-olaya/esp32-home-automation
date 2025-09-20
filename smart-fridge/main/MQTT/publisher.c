@@ -1,34 +1,33 @@
 #include "publisher.h"
 
 void publish_data() {
-    mosquitto_lib_init();
 
-    const char* id = "mqtt_client";
+    esp_mqtt_client_config_t mqtt_cfg = {
+        .broker.address.uri = MQTT_BROKER_URI,
+    };
 
-    struct mosquitto *mosquitto_ret = mosquitto_new(id, true, NULL);
-    if (mosquitto_ret == NULL) {
-        // clean up if mosquitto client instance creation fails
-        mosquitto_lib_cleanup();
+    esp_mqtt_client_handle_t mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
+    if (mqtt_client == NULL) {
+        printf("Could not create client\n");
         return;
     }
 
-    int mosquitto_connection = mosquitto_connect(mosquitto_ret, MQTT_BROKER_IP, MQTT_PORT, 60);
-    if (mosquitto_connection != MOSQ_ERR_SUCCESS){
-        mosquitto_destroy(mosquitto_ret);
-        mosquitto_lib_cleanup();
+    esp_err_t client_start_ret = esp_mqtt_client_start(mqtt_client);
+    if (client_start_ret != ESP_OK) {
+        printf("Could not start client");
+        esp_mqtt_client_destroy(mqtt_client);
         return;
     }
 
-    int publish_ret = mosquitto_publish(mosquitto_ret, NULL, "home/esp32/livingroom/temp", strlen(MQTT_PAYLOAD), MQTT_PAYLOAD, 0, false);
-    if (publish_ret != MOSQ_ERR_SUCCESS) {
-        mosquitto_destroy(mosquitto_ret);
-        mosquitto_lib_cleanup();
-        return;
+    int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
+    if (message_id != 0) {
+        printf("Message was not sent, returned %d", message_id);
     }
 
-    mosquitto_disconnect(mosquitto_ret);
+    esp_err_t stop_ret = esp_mqtt_client_stop(mqtt_client);
+    if (stop_ret != ESP_OK) {
+        printf("Could not stop client");
+    }
 
-    mosquitto_destroy(mosquitto_ret);
-
-    mosquitto_lib_cleanup();
+    esp_mqtt_client_destroy(mqtt_client);
 }

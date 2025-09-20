@@ -5,5 +5,5 @@ idf_component_register(SRCS "main.c"
                             "communication/sensors.c"
                             "control/control.c"
                             "MQTT/publisher.c"
-                       PRIV_REQUIRES spi_flash json spiffs mosquitto
+                       PRIV_REQUIRES spi_flash json spiffs mosquitto mqtt
                        INCLUDE_DIRS "config")
