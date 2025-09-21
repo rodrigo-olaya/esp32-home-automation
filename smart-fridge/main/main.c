@@ -19,8 +19,6 @@
 #include "sensors/thermistor.h"
 #include "control/control.h"
 #include "communication/queues.h"
-#include <cJSON.h>
-#include "esp_spiffs.h"
 #include "esp_system.h"
 #include "nvs_flash.h"
 #include "esp_event.h"

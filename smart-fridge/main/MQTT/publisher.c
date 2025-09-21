@@ -7,39 +7,39 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
     switch ((esp_mqtt_event_id_t) event_id) {
         case MQTT_EVENT_CONNECTED:
             printf("try to publish\n");
+            vTaskDelay(pdMS_TO_TICKS(100));
             int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
             if (message_id != 0) {
                 printf("Message was not sent, returned %d", message_id);
             }
             break;
         case MQTT_EVENT_DISCONNECTED:
-            printf("error1");
+            printf("MQTT event disconnected\n");
         break;
 
         case MQTT_EVENT_SUBSCRIBED:
-            printf("error2");
+            printf("MQTT event subscribed\n");
             break;
 
         case MQTT_EVENT_UNSUBSCRIBED:
-
+            printf("MQTT event unsubscribed");
             break;
 
         case MQTT_EVENT_PUBLISHED:
-
+            printf("MQTT event published\n");
             break;
 
         case MQTT_EVENT_DATA:
-
             printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
             printf("DATA=%.*s\r\n", event->data_len, event->data);
             break;
 
         case MQTT_EVENT_ERROR:
-            printf("error 9\n");
+            printf("MQTT event eror\n");
             break;
 
         default:
-
+            printf("default case\n");
             break;
     }
 }
