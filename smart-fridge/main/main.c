@@ -25,7 +25,6 @@
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "../config/private_config.h"
-// #include "protocol_examples_common.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -35,12 +34,6 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
-    /* This helper function configures Wi-Fi or Ethernet, as selected in menuconfig.
-     * Read "Establishing Wi-Fi or Ethernet Connection" section in
-     * examples/protocols/README.md for more information about this function.
-     */
-    // ESP_ERROR_CHECK(example_connect());
-
     esp_netif_create_default_wifi_sta();
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -49,8 +42,8 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     wifi_config_t wifi_config = {
         .sta = {
-            .ssid = "rodri",
-            .password = "xds784hzbfv",
+            .ssid = WIFI_SSID,
+            .password = WIFI_PWD,
             .threshold.authmode = WIFI_AUTH_WPA2_PSK,
         },
     };

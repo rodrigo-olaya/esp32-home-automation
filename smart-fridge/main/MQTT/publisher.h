@@ -1,4 +1,3 @@
-// #include "mosquitto.h"
 #include "../config/private_config.h"
 #include "string.h"
 #include "mqtt_client.h"
