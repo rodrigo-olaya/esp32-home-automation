@@ -1,21 +1,21 @@
 #include "publisher.h"
 
+static bool mqtt_initialized = false;
+static esp_mqtt_client_handle_t mqtt_client = NULL;
+
 void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data){
     esp_mqtt_event_handle_t event = event_data;
     esp_mqtt_client_handle_t mqtt_client = event->client;
 
     switch ((esp_mqtt_event_id_t) event_id) {
         case MQTT_EVENT_CONNECTED:
-            printf("try to publish\n");
-            vTaskDelay(pdMS_TO_TICKS(100));
-            int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
-            if (message_id != 0) {
-                printf("Message was not sent, returned %d", message_id);
-            }
+            printf("Event connected\n");
+            mqtt_initialized = true;
             break;
         case MQTT_EVENT_DISCONNECTED:
             printf("MQTT event disconnected\n");
-        break;
+            mqtt_initialized = false;
+            break;
 
         case MQTT_EVENT_SUBSCRIBED:
             printf("MQTT event subscribed\n");
@@ -44,13 +44,17 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
     }
 }
 
-void publish_data() {
+void mqtt_init() {
+    if (mqtt_initialized) {
+        printf("MQTT already initialized.\n");
+        return;
+    }
 
     esp_mqtt_client_config_t mqtt_cfg = {
         .broker.address.uri = MQTT_BROKER_URI,
     };
 
-    esp_mqtt_client_handle_t mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
+    mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
     if (mqtt_client == NULL) {
         printf("Could not create client\n");
         return;
@@ -70,4 +74,13 @@ void publish_data() {
     }
 
     printf("event started\n");
+}
+
+void publish_data() {
+    printf("try to publish\n");
+    vTaskDelay(pdMS_TO_TICKS(100));
+    int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
+    if (message_id != 0) {
+        printf("Message was not sent, returned %d", message_id);
+    }
 }

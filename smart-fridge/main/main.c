@@ -55,6 +55,9 @@ void app_main(void)
     /* Initialize the queues */
     queues_init();
 
+    /* Initialize MQTT client once */
+    mqtt_init();
+
     /* Initialize controls - tasks and receiver code */
     controls_init();
 }
