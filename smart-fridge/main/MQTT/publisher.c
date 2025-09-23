@@ -35,7 +35,7 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
             break;
 
         case MQTT_EVENT_ERROR:
-            printf("MQTT event eror\n");
+            printf("MQTT event ereor\n");
             break;
 
         default:
@@ -63,6 +63,10 @@ void mqtt_init() {
     printf("created event\n");
 
     esp_err_t register_ret = esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, event_handler, NULL);
+    if (register_ret != ESP_OK){
+        printf("Could not register\n");
+        return;
+    }
 
     printf("event registered\n");
 
