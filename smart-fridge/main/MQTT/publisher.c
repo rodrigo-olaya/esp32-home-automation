@@ -69,7 +69,6 @@ void mqtt_init() {
         ESP_LOGE(TAG, "Could not register");
         return;
     }
-
     ESP_LOGI(TAG, "Event registered");
 
     esp_err_t client_start_ret = esp_mqtt_client_start(mqtt_client);
@@ -78,14 +77,17 @@ void mqtt_init() {
         esp_mqtt_client_destroy(mqtt_client);
         return;
     }
-
     ESP_LOGI(TAG, "Event started");
 }
 
-void publish_data() {
+void publish_data(float dataToPublish) {
     ESP_LOGI(TAG, "Attempting to publish");
     vTaskDelay(pdMS_TO_TICKS(100));
-    int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
+
+    char mqtt_payload[64];
+    snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", dataToPublish);
+
+    int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
     if (message_id != 0) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
     }
