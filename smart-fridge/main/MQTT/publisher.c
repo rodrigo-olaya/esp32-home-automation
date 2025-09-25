@@ -1,5 +1,7 @@
 #include "publisher.h"
 
+static const char* TAG = "publisher";
+
 static bool mqtt_initialized = false;
 static esp_mqtt_client_handle_t mqtt_client = NULL;
 
@@ -9,44 +11,44 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
 
     switch ((esp_mqtt_event_id_t) event_id) {
         case MQTT_EVENT_CONNECTED:
-            printf("Event connected\n");
+            ESP_LOGI(TAG, "Event connected");
             mqtt_initialized = true;
             break;
         case MQTT_EVENT_DISCONNECTED:
-            printf("MQTT event disconnected\n");
+            ESP_LOGI(TAG, "MQTT event disconnected");
             mqtt_initialized = false;
             break;
 
         case MQTT_EVENT_SUBSCRIBED:
-            printf("MQTT event subscribed\n");
+            ESP_LOGI(TAG, "MQTT event subscribed");
             break;
 
         case MQTT_EVENT_UNSUBSCRIBED:
-            printf("MQTT event unsubscribed");
+            ESP_LOGI(TAG, "MQTT event unsubscribed");
             break;
 
         case MQTT_EVENT_PUBLISHED:
-            printf("MQTT event published\n");
+            ESP_LOGI(TAG, "MQTT event published");
             break;
 
         case MQTT_EVENT_DATA:
-            printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
-            printf("DATA=%.*s\r\n", event->data_len, event->data);
+            ESP_LOGI(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
+            ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
             break;
 
         case MQTT_EVENT_ERROR:
-            printf("MQTT event ereor\n");
+            ESP_LOGI(TAG, "MQTT event error");
             break;
 
         default:
-            printf("default case\n");
+            ESP_LOGI(TAG, "Default case");
             break;
     }
 }
 
 void mqtt_init() {
     if (mqtt_initialized) {
-        printf("MQTT already initialized.\n");
+        ESP_LOGI(TAG, "MQTT already initialized");
         return;
     }
 
@@ -56,35 +58,35 @@ void mqtt_init() {
 
     mqtt_client = esp_mqtt_client_init(&mqtt_cfg);
     if (mqtt_client == NULL) {
-        printf("Could not create client\n");
+        ESP_LOGI(TAG, "Could not create client");
         return;
     }
 
-    printf("created event\n");
+    ESP_LOGI(TAG, "Created event");
 
     esp_err_t register_ret = esp_mqtt_client_register_event(mqtt_client, ESP_EVENT_ANY_ID, event_handler, NULL);
     if (register_ret != ESP_OK){
-        printf("Could not register\n");
+        ESP_LOGE(TAG, "Could not register");
         return;
     }
 
-    printf("event registered\n");
+    ESP_LOGI(TAG, "Event registered");
 
     esp_err_t client_start_ret = esp_mqtt_client_start(mqtt_client);
     if (client_start_ret != ESP_OK) {
-        printf("Could not start client");
+        ESP_LOGE(TAG, "Could not start client");
         esp_mqtt_client_destroy(mqtt_client);
         return;
     }
 
-    printf("event started\n");
+    ESP_LOGI(TAG, "Event started");
 }
 
 void publish_data() {
-    printf("try to publish\n");
+    ESP_LOGI(TAG, "Attempting to publish");
     vTaskDelay(pdMS_TO_TICKS(100));
     int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, MQTT_PAYLOAD, strlen(MQTT_PAYLOAD), 0, false);
     if (message_id != 0) {
-        printf("Message was not sent, returned %d", message_id);
+        ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
     }
 }
