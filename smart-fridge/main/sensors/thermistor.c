@@ -1,5 +1,6 @@
 #include "thermistor.h"
-#include "../communication/gpio_config.h"
+
+static const char* THERMISTOR_TAG = "thermistor";
 
 void read_temperature (void *pvParameters) {
 
@@ -11,7 +12,7 @@ void read_temperature (void *pvParameters) {
     esp_err_t ret = ds18x20_scan_devices(FF_THERMISTOR_GPIO, addr_list, sizeof(addr_list), &found);
 
     if (ret != ESP_OK) {
-        printf("Error finding devices: %X\n", ret);
+        ESP_LOGE(THERMISTOR_TAG, "Error finding devices: %X", ret);
         return;
     }
     else {
@@ -25,7 +26,7 @@ void read_temperature (void *pvParameters) {
 
     ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
     if (ret != ESP_OK) {
-        printf("Scan failed: 0x%X (%s)\n", ret, esp_err_to_name(ret));
+        ESP_LOGE(THERMISTOR_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
         return;
     }
 
@@ -33,7 +34,7 @@ void read_temperature (void *pvParameters) {
         {
             ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
             if (ret != ESP_OK) {
-                printf("Error reading temp: %X\n", ret);
+                ESP_LOGE(THERMISTOR_TAG, "Error reading temp: %X", ret);
                 return;
             }
             else {

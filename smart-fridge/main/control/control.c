@@ -1,5 +1,7 @@
 #include "control.h"
 
+static const char* CONTROL_TAG = "control";
+
 void vReceiverTask( void *pvParameters )
 {
     /* Declare the variable that will hold the values received from the queue. */
@@ -12,18 +14,18 @@ void vReceiverTask( void *pvParameters )
         /* This call should always find the queue empty */
         if( uxQueueMessagesWaiting( xSensorDataQueue ) != 0 )
         {
-            printf("Queue should have been empty!\n");
+            ESP_LOGE(CONTROL_TAG, "Queue should have been empty");
         }
         /* Receive data from the queue. */
         xStatus = xQueueReceive( xSensorDataQueue, &lReceivedValue, xTicksToWait );
         if( xStatus == pdPASS )
         {
-            printf("Number: %.2f\n", lReceivedValue);
+            ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
             publish_data();
         }
         else
         {
-            printf("Could not receive from the queue.\n");
+            ESP_LOGE(CONTROL_TAG, "Could not receive from the queue");
         }
     }
 }
