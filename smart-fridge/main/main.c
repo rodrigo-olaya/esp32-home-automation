@@ -25,6 +25,9 @@
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "../config/private_config.h"
+#include "esp_log.h"
+
+static const char* TAG = "app_main";
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -51,6 +54,8 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_wifi_start());
 
     ESP_ERROR_CHECK(esp_wifi_connect());
+
+    vTaskDelay(pdMS_TO_TICKS(6000));
 
     /* Initialize the queues */
     queues_init();
