@@ -22,6 +22,10 @@
     "esp_mac.h": "c",
     "esp_system.h": "c",
     "queues.h": "c",
-    "control.h": "c"
+    "control.h": "c",
+    "cjson.h": "c",
+    "thermistor.h": "c",
+    "publisher.h": "c",
+    "mosquitto.h": "c"
   }
 }
