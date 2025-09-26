@@ -7,7 +7,6 @@ static esp_mqtt_client_handle_t mqtt_client = NULL;
 
 void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data){
     esp_mqtt_event_handle_t event = event_data;
-    esp_mqtt_client_handle_t mqtt_client = event->client;
 
     switch ((esp_mqtt_event_id_t) event_id) {
         case MQTT_EVENT_CONNECTED:

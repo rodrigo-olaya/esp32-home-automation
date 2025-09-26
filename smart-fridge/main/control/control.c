@@ -21,6 +21,7 @@ void vReceiverTask( void *pvParameters )
         if( xStatus == pdPASS )
         {
             ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
+            ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
             publish_data(lReceivedValue);
         }
         else

@@ -27,8 +27,6 @@
 #include "../config/private_config.h"
 #include "esp_log.h"
 
-static const char* TAG = "app_main";
-
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)

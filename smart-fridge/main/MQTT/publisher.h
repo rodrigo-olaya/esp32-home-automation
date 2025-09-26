@@ -4,7 +4,6 @@
 #include "esp_event.h"
 #include "esp_log.h"
 
-// #define MQTT_PAYLOAD "25"
 #define PI4_TOPIC "home/esp32/livingroom/temp"
 
 void publish_data(float dataToPublish);
