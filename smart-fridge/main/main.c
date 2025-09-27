@@ -22,11 +22,15 @@
 #include "WiFi/WiFi.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "sensors/SHT_3x.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
+    humidity_sensor_init();
+    read_humidity();
+
     /* Initialize WiFi */
     WiFi_init();
 

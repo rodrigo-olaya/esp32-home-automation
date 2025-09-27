@@ -17,3 +17,4 @@ dependencies:
   esp-idf-lib/onewire: '*'
   esp-idf-lib/ds18x20: '*'
   espressif/mosquitto: '*'
+  esp-idf-lib/sht3x: '*'

@@ -1,5 +1,6 @@
 idf_component_register(SRCS "main.c"
                             "sensors/thermistor.c"
+                            "sensors/SHT_3x.c"
                             "communication/gpio_config.c"
                             "communication/queues.c"
                             "communication/sensors.c"
