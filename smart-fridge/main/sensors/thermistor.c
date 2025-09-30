@@ -26,11 +26,13 @@ void read_temperature (void *pvParameters) {
 
     for( ;; )
         {
+            /* This function is needed before each thermistor read */
             ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
             if (ret != ESP_OK) {
                 ESP_LOGE(THERMISTOR_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
                 return;
             }
+            /* Get one reading from thermistor */
             ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
             if (ret != ESP_OK) {
                 ESP_LOGE(THERMISTOR_TAG, "Error reading temp: %X", ret);
@@ -39,6 +41,7 @@ void read_temperature (void *pvParameters) {
             else {
                 ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
                 ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
+                /* This function will send values to Home Assistant through a queue */
                 sensor_send_data(&temperature);
                 vTaskDelay(pdMS_TO_TICKS(10000));
             }

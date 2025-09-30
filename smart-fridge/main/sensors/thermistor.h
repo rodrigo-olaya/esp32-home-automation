@@ -11,4 +11,8 @@
 #include "../communication/sensors.h"
 #include "../communication/gpio_config.h"
 
+/**
+ * @brief This function reads the temperature from the DS18B20 and calls the sensor control function with the function.
+ * @param pvParameters Parameters needed my vTask creation
+ */
 void read_temperature (void *pvParameters);
