@@ -4,6 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "../sensors/thermistor.h"
+#include "../sensors/SHT_3x.h"
 #include "../MQTT/publisher.h"
 
 extern QueueHandle_t xSensorDataQueue;

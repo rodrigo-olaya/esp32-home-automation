@@ -34,6 +34,10 @@ void vReceiverTask( void *pvParameters )
 void controls_init() {
     /* Create the task that will read the thermistor data and send it to the receiver */
     xTaskCreate( read_temperature, "Sender1", 4000, NULL, 1, NULL );
+
+    /* Create the task that will read humidity and send it to the receiver*/
+    xTaskCreate( read_humidity, "Sender2", 4000, NULL, 1, NULL);
+
     /* Create the task that will read from the queue. The task is created
     with priority 2, so above the priority of the sender tasks. */
     xTaskCreate( vReceiverTask, "Receiver", 2048, NULL, 2, NULL );
