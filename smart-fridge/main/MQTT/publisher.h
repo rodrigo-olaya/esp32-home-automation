@@ -4,7 +4,8 @@
 #include "esp_event.h"
 #include "esp_log.h"
 
-#define PI4_TOPIC "home/esp32/livingroom/temp"
+#define TEMP_TOPIC "home/esp32/livingroom/temp"
+#define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
 
 void publish_data(float dataToPublish);
 

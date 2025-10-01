@@ -79,14 +79,22 @@ void mqtt_init() {
     ESP_LOGI(TAG, "Event started");
 }
 
-void publish_data(float dataToPublish) {
+void publish_data(float dataToPublish, int dataType) {
     ESP_LOGI(TAG, "Attempting to publish");
     vTaskDelay(pdMS_TO_TICKS(100));
 
     char mqtt_payload[64];
     snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", dataToPublish);
 
-    int message_id = esp_mqtt_client_publish(mqtt_client, PI4_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
+    int message_id;
+
+    if (dataType == 0){
+        int message_id = esp_mqtt_client_publish(mqtt_client, TEMP_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
+    }
+    else {
+        int message_id = esp_mqtt_client_publish(mqtt_client, HUMIDITY_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
+    }
+
     if (message_id != 0) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
     }
