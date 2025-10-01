@@ -35,6 +35,10 @@ void read_humidity() {
     ESP_LOGI(SHT3X_TAG, "Temperature: %f", temperature);
     ESP_LOGI(SHT3X_TAG, "Humidity: %f", humidity);
 
+    sensor_send_data(&humidity);
+
+    vTaskDelay(pdMS_TO_TICKS(10000));
+
     // esp_err_t free_ret = sht3x_free_desc(&humidity_sensor_desc);
     // if (free_ret != ESP_OK){
     //     ESP_LOGE(SHT3X_TAG, "Descriptor free failed");

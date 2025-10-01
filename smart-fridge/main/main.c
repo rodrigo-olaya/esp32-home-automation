@@ -28,8 +28,10 @@ extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    humidity_sensor_init();
-    read_humidity();
+    
+
+    // /* Temporary call to read humidity */
+    // read_humidity();
 
     /* Initialize WiFi */
     WiFi_init();
@@ -39,6 +41,9 @@ void app_main(void)
 
     /* Initialize MQTT client once */
     mqtt_init();
+
+    /* Initialize the SHT31 humidity sensor */
+    humidity_sensor_init();
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
