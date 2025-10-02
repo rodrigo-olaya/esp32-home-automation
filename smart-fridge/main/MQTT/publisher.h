@@ -8,6 +8,6 @@
 #define TEMP_TOPIC "home/esp32/livingroom/temp"
 #define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
 
-void publish_data(sensorData_t sensor_data);
+void publish_data(sensorData_t *sensor_data);
 
 void mqtt_init();

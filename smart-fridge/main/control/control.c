@@ -32,7 +32,7 @@ void vReceiverTask( void *pvParameters )
 
             ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
             // ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
-            publish_data(sensor_data);
+            publish_data(&sensor_data);
         }
         else
         {

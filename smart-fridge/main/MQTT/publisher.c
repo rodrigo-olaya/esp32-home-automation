@@ -84,7 +84,7 @@ void publish_data(sensorData_t *sensor_data) {
     vTaskDelay(pdMS_TO_TICKS(100));
 
     char mqtt_payload[64];
-    snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", sensor_data->type);
+    snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", sensor_data->data);
 
     int message_id;
 

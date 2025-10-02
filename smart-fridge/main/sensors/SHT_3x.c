@@ -38,7 +38,11 @@ void read_humidity() {
         ESP_LOGI(SHT3X_TAG, "Temperature: %f", temperature);
         ESP_LOGI(SHT3X_TAG, "Humidity: %f", humidity);
 
-        sensor_send_data(&humidity);
+        sensorData_t sensor_data;
+        sensor_data.type = HUMIDITY;
+        sensor_data.data = humidity;
+
+        sensor_send_data(&sensor_data);
 
         vTaskDelay(pdMS_TO_TICKS(10000));
 

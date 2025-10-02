@@ -43,7 +43,7 @@ void app_main(void)
     mqtt_init();
 
     /* Initialize the SHT31 humidity sensor */
-    humidity_sensor_init();
+    // humidity_sensor_init();
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
