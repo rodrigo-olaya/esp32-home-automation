@@ -1,11 +1,18 @@
 #include "control.h"
+#include "../sensors/thermistor.h"
+#include "../sensors/SHT_3x.h"
 
 static const char* CONTROL_TAG = "control";
 
 void vReceiverTask( void *pvParameters )
 {
     /* Declare the variable that will hold the values received from the queue. */
-    float lReceivedValue;
+    // sensorType_t sensor_type; = sensor_data->type;
+    // float sensor_data; = sensor_data->type;
+
+    sensorData_t sensor_data;
+    
+    // float lReceivedValue;
     BaseType_t xStatus;
     const TickType_t xTicksToWait = pdMS_TO_TICKS( 100000 );
 
@@ -17,17 +24,30 @@ void vReceiverTask( void *pvParameters )
             ESP_LOGE(CONTROL_TAG, "Queue should have been empty");
         }
         /* Receive data from the queue. */
-        xStatus = xQueueReceive( xSensorDataQueue, &lReceivedValue, xTicksToWait );
+        xStatus = xQueueReceive( xSensorDataQueue, &sensor_data, xTicksToWait );
         if( xStatus == pdPASS )
         {
+            // sensorType_t sensor_type = sensor_data.type;
+            // float data = sensor_data.data;
+
             ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
-            ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
-            publish_data(lReceivedValue);
+            // ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
+            publish_data(sensor_data);
         }
         else
         {
             ESP_LOGE(CONTROL_TAG, "Could not receive from the queue");
         }
+    }
+}
+
+void sensor_send_data(sensorData_t *sensor_data) {
+    BaseType_t xStatus;
+
+    xStatus = xQueueSendToBack( xSensorDataQueue, sensor_data, 0 );
+    if( xStatus != pdPASS )
+    {
+        ESP_LOGE(CONTROL_TAG, "Could not send data to the queue");
     }
 }
 
