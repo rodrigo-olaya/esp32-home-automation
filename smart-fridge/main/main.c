@@ -16,7 +16,7 @@
 #include <inttypes.h>
 #include <portmacro.h>
 #include "esp_mac.h"
-#include "sensors/thermistor.h"
+// #include "sensors/thermistor.h"
 #include "control/control.h"
 #include "communication/queues.h"
 #include "WiFi/WiFi.h"

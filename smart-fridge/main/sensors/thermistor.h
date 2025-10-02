@@ -8,8 +8,12 @@
 #include "esp_log.h"
 #include <inttypes.h> 
 #include <portmacro.h>
-#include "../communication/sensors.h"
+// #include "../communication/sensors.h"
 #include "../communication/gpio_config.h"
+#include "../control/control.h"
+#include "sensor_defines.h"
+
+// extern enum sensorData_t;
 
 /**
  * @brief This function reads the temperature from the DS18B20 and calls the sensor control function with the function.

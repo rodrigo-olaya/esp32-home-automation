@@ -24,23 +24,29 @@ void humidity_sensor_init() {
 
 void read_humidity() {
 
+    humidity_sensor_init();
+
     float temperature;
     float humidity;
 
-    esp_err_t measure_ret = sht3x_measure(&humidity_sensor_desc, &temperature, &humidity);
-    if (measure_ret != ESP_OK){
-        ESP_LOGE(SHT3X_TAG, "Measurement failed");
+    for( ;; ) {
+        esp_err_t measure_ret = sht3x_measure(&humidity_sensor_desc, &temperature, &humidity);
+        if (measure_ret != ESP_OK){
+            ESP_LOGE(SHT3X_TAG, "Measurement failed");
+        }
+
+        ESP_LOGI(SHT3X_TAG, "Temperature: %f", temperature);
+        ESP_LOGI(SHT3X_TAG, "Humidity: %f", humidity);
+
+        sensor_send_data(&humidity);
+
+        vTaskDelay(pdMS_TO_TICKS(10000));
+
+        // esp_err_t free_ret = sht3x_free_desc(&humidity_sensor_desc);
+        // if (free_ret != ESP_OK){
+        //     ESP_LOGE(SHT3X_TAG, "Descriptor free failed");
+        // }
     }
 
-    ESP_LOGI(SHT3X_TAG, "Temperature: %f", temperature);
-    ESP_LOGI(SHT3X_TAG, "Humidity: %f", humidity);
-
-    sensor_send_data(&humidity);
-
-    vTaskDelay(pdMS_TO_TICKS(10000));
-
-    // esp_err_t free_ret = sht3x_free_desc(&humidity_sensor_desc);
-    // if (free_ret != ESP_OK){
-    //     ESP_LOGE(SHT3X_TAG, "Descriptor free failed");
-    // }
+    
 }

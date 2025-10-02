@@ -42,7 +42,12 @@ void read_temperature (void *pvParameters) {
                 ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
                 ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
                 /* This function will send values to Home Assistant through a queue */
-                sensor_send_data(&temperature);
+
+                sensorData_t sensor_data;
+                sensor_data.type = TEMPERATURE;
+                sensor_data.data = temperature;
+
+                sensor_send_data(&sensor_data);
                 vTaskDelay(pdMS_TO_TICKS(10000));
             }
         }
