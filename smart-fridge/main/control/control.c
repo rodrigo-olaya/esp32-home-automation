@@ -6,13 +6,8 @@ static const char* CONTROL_TAG = "control";
 
 void vReceiverTask( void *pvParameters )
 {
-    /* Declare the variable that will hold the values received from the queue. */
-    // sensorType_t sensor_type; = sensor_data->type;
-    // float sensor_data; = sensor_data->type;
-
     sensorData_t sensor_data;
-    
-    // float lReceivedValue;
+
     BaseType_t xStatus;
     const TickType_t xTicksToWait = pdMS_TO_TICKS( 100000 );
 
@@ -27,11 +22,7 @@ void vReceiverTask( void *pvParameters )
         xStatus = xQueueReceive( xSensorDataQueue, &sensor_data, xTicksToWait );
         if( xStatus == pdPASS )
         {
-            // sensorType_t sensor_type = sensor_data.type;
-            // float data = sensor_data.data;
-
             ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
-            // ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
             ESP_LOGI(CONTROL_TAG, "Data: %f", sensor_data.data);
             publish_data(&sensor_data);
         }

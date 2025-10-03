@@ -41,7 +41,6 @@ void read_temperature (void *pvParameters) {
             else {
                 ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
                 ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
-                /* This function will send values to Home Assistant through a queue */
 
                 sensorData_t sensor_data;
                 sensor_data.type = TEMPERATURE;
