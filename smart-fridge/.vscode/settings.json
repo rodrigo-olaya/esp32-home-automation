@@ -26,6 +26,7 @@
     "cjson.h": "c",
     "thermistor.h": "c",
     "publisher.h": "c",
-    "mosquitto.h": "c"
+    "mosquitto.h": "c",
+    "sht3x.h": "c"
   }
 }
