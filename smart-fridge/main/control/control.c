@@ -32,6 +32,7 @@ void vReceiverTask( void *pvParameters )
 
             ESP_LOGI(CONTROL_TAG, "Data received, calling publish_data");
             // ESP_LOGI(CONTROL_TAG, "Data received from queue: %f", lReceivedValue);
+            ESP_LOGI(CONTROL_TAG, "Data: %f", sensor_data.data);
             publish_data(&sensor_data);
         }
         else
@@ -43,6 +44,8 @@ void vReceiverTask( void *pvParameters )
 
 void sensor_send_data(sensorData_t *sensor_data) {
     BaseType_t xStatus;
+
+    ESP_LOGI(CONTROL_TAG, "Data in send_sensor_data: %f", sensor_data->data);
 
     xStatus = xQueueSendToBack( xSensorDataQueue, sensor_data, 0 );
     if( xStatus != pdPASS )

@@ -89,9 +89,11 @@ void publish_data(sensorData_t *sensor_data) {
     int message_id;
 
     if (sensor_data->type == TEMPERATURE){
+        ESP_LOGI(TAG, "Temp: %f", sensor_data->data);
         message_id = esp_mqtt_client_publish(mqtt_client, TEMP_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
     }
     else {
+        ESP_LOGI(TAG, "Humidity: %f", sensor_data->data);
         message_id = esp_mqtt_client_publish(mqtt_client, HUMIDITY_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
     }
 
