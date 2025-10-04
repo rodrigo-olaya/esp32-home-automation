@@ -8,6 +8,13 @@
 #define TEMP_TOPIC "home/esp32/livingroom/temp"
 #define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
 
+/**
+ * @brief This function publishes data to the MQTT broker in Raspberry Pi
+ * @param sensor_data struct that holds sensor type and sensor data
+ */
 void publish_data(sensorData_t *sensor_data);
 
+/**
+ * @brief This function initializes MQTT communication
+ */
 void mqtt_init();
