@@ -6,4 +6,8 @@
 #include "freertos/queue.h"
 #include "../sensors/sensor_defines.h"
 
+/**
+ * @brief This function initializes the queues to communicate from sensors to HomeAssistant
+ * @param sensor_data
+ */
 uint8_t queues_init();
