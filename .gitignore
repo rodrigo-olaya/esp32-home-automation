@@ -65,3 +65,7 @@ smart-fridge/main/config/private_config.h
 # Managed components
 smart-fridge/managed_components/
 
+# Other
+.DS_Store
+.vscode/c_cpp_properties.json
+
