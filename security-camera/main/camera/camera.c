@@ -26,10 +26,14 @@ esp_err_t camera_capture(){
     camera_fb_t * fb = esp_camera_fb_get();
     if (!fb) {
         ESP_LOGE(CAM_TAG, "Camera Capture Failed");
+        // esp_camera_fb_return(fb);
         return ESP_FAIL;
     }
-    //replace this with your own function
-    // process_image(fb->width, fb->height, fb->format, fb->buf, fb->len);
+
+    ESP_LOGI(CAM_TAG, "Width: %d", fb->width);
+    ESP_LOGI(CAM_TAG, "Height: %d", fb->height);
+    ESP_LOGI(CAM_TAG, "Format: %d", fb->format);
+    ESP_LOGI(CAM_TAG, "Size in bytes: %d", fb->len);
   
     //return the frame buffer back to the driver for reuse
     esp_camera_fb_return(fb);

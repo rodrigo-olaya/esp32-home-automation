@@ -14,8 +14,13 @@
 #include "WiFi/WiFi.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "camera/camera.h"
 
 void app_main(void)
 {
     WiFi_init();
+
+    camera_init();
+
+    camera_capture();
 }
