@@ -30,6 +30,6 @@ void app_main(void)
     while(1) {
         camera_capture();
         
-        vTaskDelay(pdMS_TO_TICKS(2000));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
