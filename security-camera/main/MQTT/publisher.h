@@ -4,10 +4,7 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "esp_camera.h"
-// #include "../sensors/sensor_defines.h"
 
-// #define TEMP_TOPIC "home/esp32/livingroom/temp"
-// #define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
 #define CAM_TOPIC "home/esp32/camera"
 
 /**

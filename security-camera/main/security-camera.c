@@ -21,19 +21,15 @@ void app_main(void)
 {
     WiFi_init();
 
-    /* Initialize MQTT client once */
     mqtt_init();
 
     camera_init();
 
-        vTaskDelay(pdMS_TO_TICKS(2000));
+    vTaskDelay(pdMS_TO_TICKS(2000));
     
-    // Infinite loop
     while(1) {
         camera_capture();
         
-        vTaskDelay(pdMS_TO_TICKS(2000)); // Wait 2 seconds between captures
+        vTaskDelay(pdMS_TO_TICKS(2000));
     }
-
-    // camera_capture();
 }

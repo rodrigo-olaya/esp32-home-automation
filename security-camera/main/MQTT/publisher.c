@@ -83,25 +83,15 @@ void publish_data( camera_fb_t *fb) {
     ESP_LOGI(TAG, "Attempting to publish");
     vTaskDelay(pdMS_TO_TICKS(100));
 
-    // char mqtt_payload[64];
-    // snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", sensor_data->data);
     const char* mqtt_payload = (const char*)fb->buf;
 
     int message_id;
 
-    // if (sensor_data->type == TEMPERATURE){
-    //     ESP_LOGI(TAG, "Temp: %f", sensor_data->data);
-    //     message_id = esp_mqtt_client_publish(mqtt_client, TEMP_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
-    // }
-    // else {
-    //     ESP_LOGI(TAG, "Humidity: %f", sensor_data->data);
-    //     message_id = esp_mqtt_client_publish(mqtt_client, HUMIDITY_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
-    // }
     message_id = esp_mqtt_client_publish(mqtt_client, CAM_TOPIC, mqtt_payload, fb->len, 0, false);
 
     if (message_id < 0) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
     }else {
-    ESP_LOGI(TAG, "✓ Published successfully, msg_id: %d, size: %d bytes", message_id, fb->len);
+    ESP_LOGI(TAG, "Published successfully, msg_id: %d, size: %d bytes", message_id, fb->len);
 }
 }
