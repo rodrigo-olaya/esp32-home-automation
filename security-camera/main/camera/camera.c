@@ -34,6 +34,8 @@ esp_err_t camera_capture(){
     ESP_LOGI(CAM_TAG, "Height: %d", fb->height);
     ESP_LOGI(CAM_TAG, "Format: %d", fb->format);
     ESP_LOGI(CAM_TAG, "Size in bytes: %d", fb->len);
+
+    publish_data(fb);
   
     //return the frame buffer back to the driver for reuse
     esp_camera_fb_return(fb);

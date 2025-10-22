@@ -15,12 +15,25 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "camera/camera.h"
+#include "MQTT/publisher.h"
 
 void app_main(void)
 {
     WiFi_init();
 
+    /* Initialize MQTT client once */
+    mqtt_init();
+
     camera_init();
 
-    camera_capture();
+        vTaskDelay(pdMS_TO_TICKS(2000));
+    
+    // Infinite loop
+    while(1) {
+        camera_capture();
+        
+        vTaskDelay(pdMS_TO_TICKS(2000)); // Wait 2 seconds between captures
+    }
+
+    // camera_capture();
 }

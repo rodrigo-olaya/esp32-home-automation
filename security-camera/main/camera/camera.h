@@ -1,6 +1,7 @@
 #include "esp_camera.h"
 #include <esp_log.h>
 #include <esp_system.h>
+#include "../MQTT/publisher.h"
 
 //WROVER-KIT PIN Map
 #define CAM_PIN_PWDN    32 //power down is not used
