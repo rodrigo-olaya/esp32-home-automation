@@ -101,5 +101,7 @@ void publish_data( camera_fb_t *fb) {
 
     if (message_id < 0) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
-    }
+    }else {
+    ESP_LOGI(TAG, "✓ Published successfully, msg_id: %d, size: %d bytes", message_id, fb->len);
+}
 }
