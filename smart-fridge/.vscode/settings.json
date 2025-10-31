@@ -28,6 +28,7 @@
     "publisher.h": "c",
     "mosquitto.h": "c",
     "sht3x.h": "c",
-    "mqtt_client.h": "c"
+    "mqtt_client.h": "c",
+    "sht_3x.h": "c"
   }
 }

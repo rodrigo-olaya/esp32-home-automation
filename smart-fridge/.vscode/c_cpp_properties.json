@@ -17,6 +17,29 @@
         ],
         "limitSymbolsToIncludedHeaders": true
       }
+    },
+{
+      "name": "CppUTest (mac)",
+      "compilerPath": "/usr/bin/clang++",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/usr/local/Cellar/cpputest/4.0/include",
+        "/usr/local/include"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}",
+          "/usr/local/Cellar/cpputest/4.0/include"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "macFrameworkPath": [
+        "/System/Library/Frameworks",
+        "/Library/Frameworks"
+      ],
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-clang-x64"
     }
   ],
   "version": 4
