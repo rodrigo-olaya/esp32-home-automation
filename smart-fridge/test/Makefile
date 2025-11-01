@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -I/usr/local/include -g -Wall
 LDFLAGS = -L/usr/local/lib -lCppUTest -lCppUTestExt
 
-SRCS = temp_conversion_tdd.cpp
+SRCS = temp_conversion_tdd.cpp ../main/data/handle_temperature.c
 
 TARGET = runTests
 
