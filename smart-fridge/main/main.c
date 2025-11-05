@@ -40,16 +40,10 @@ void app_main(void)
 
     // /* Initialize controls - tasks and receiver code */
     // controls_init();
-    printf("Stabilizing\n");
-    // vTaskDelay(100 / portTICK_PERIOD_MS);
 
     gpio_number_t led_pin = GPIO_NUMBER_2;
     gpio_set_low(led_pin);
-    printf("Stabilizing pt2\n");
-    // vTaskDelay(3000 / portTICK_PERIOD_MS);
     gpio_set_dir(led_pin, GPIO_OUTPUT);
-    printf("Stabilizing pt3\n");
-    // vTaskDelay(3000 / portTICK_PERIOD_MS);
     vTaskDelay(500 / portTICK_PERIOD_MS);
 
     while(1) {
