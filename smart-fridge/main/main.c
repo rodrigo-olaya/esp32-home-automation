@@ -23,20 +23,31 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "sensors/SHT_3x.h"
+#include "drivers/gpio_driver.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    /* Initialize WiFi */
-    WiFi_init();
+    // /* Initialize WiFi */
+    // WiFi_init();
 
-    /* Initialize the queues */
-    queues_init();
+    // /* Initialize the queues */
+    // queues_init();
 
-    /* Initialize MQTT client once */
-    mqtt_init();
+    // /* Initialize MQTT client once */
+    // mqtt_init();
 
-    /* Initialize controls - tasks and receiver code */
-    controls_init();
+    // /* Initialize controls - tasks and receiver code */
+    // controls_init();
+
+    gpio_number_t led_pin = GPIO_NUMBER_2;
+    gpio_set_dir(led_pin, GPIO_OUTPUT);
+
+    while(1) {
+        gpio_set_high(led_pin);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        gpio_set_low(led_pin);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
 }
