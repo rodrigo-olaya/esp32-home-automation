@@ -3,7 +3,7 @@
 
 void gpio_set_dir(gpio_number_t gpio_pin, gpio_direction_t direction) {
     if (direction == GPIO_OUTPUT) {
-        GPIO_ENABLE_REG = (1 << gpio_pin);
+        GPIO_ENABLE_REG |= (1 << gpio_pin);
     }
 }
 
