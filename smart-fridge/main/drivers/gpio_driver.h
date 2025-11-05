@@ -9,23 +9,23 @@ typedef enum {
 } gpio_direction_t;
 
 typedef enum {
-    GPIO_NUM_0 = 0,
-    GPIO_NUM_1 = 1,
-    GPIO_NUM_2 = 2,
-    GPIO_NUM_3 = 3,
-    GPIO_NUM_4 = 4,
-    GPIO_NUM_5 = 5,
-    GPIO_NUM_6 = 6, 
-    GPIO_NUM_7 = 7,
-    GPIO_NUM_8 = 8,
-    GPIO_NUM_9 = 9,
-    GPIO_NUM_10 = 10,
-} gpio_num_t;
+    GPIO_NUMBER_0 = 0,
+    GPIO_NUMBER_1 = 1,
+    GPIO_NUMBER_2 = 2,
+    GPIO_NUMBER_3 = 3,
+    GPIO_NUMBER_4 = 4,
+    GPIO_NUMBER_5 = 5,
+    GPIO_NUMBER_6 = 6, 
+    GPIO_NUMBER_7 = 7,
+    GPIO_NUMBER_8 = 8,
+    GPIO_NUMBER_9 = 9,
+    GPIO_NUMBER_10 = 10,
+} gpio_number_t;
 
-void gpio_set_direction(gpio_num_t gpio_pin, gpio_direction_t direction);
+void gpio_set_dir(gpio_number_t gpio_pin, gpio_direction_t direction);
 
-void gpio_set_high(gpio_num_t gpio_pin);
+void gpio_set_high(gpio_number_t gpio_pin);
 
-void gpio_set_low(gpio_num_t gpio_pin);
+void gpio_set_low(gpio_number_t gpio_pin);
 
 #endif // GPIO_DRIVER_H
