@@ -20,6 +20,7 @@ typedef enum {
     GPIO_NUMBER_8 = 8,
     GPIO_NUMBER_9 = 9,
     GPIO_NUMBER_10 = 10,
+    GPIO_NUMBER_18 = 18
 } gpio_number_t;
 
 void gpio_set_dir(gpio_number_t gpio_pin, gpio_direction_t direction);
