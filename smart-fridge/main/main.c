@@ -29,17 +29,17 @@ extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    // /* Initialize WiFi */
-    // WiFi_init();
+    /* Initialize WiFi */
+    WiFi_init();
 
-    // /* Initialize the queues */
-    // queues_init();
+    /* Initialize the queues */
+    queues_init();
 
-    // /* Initialize MQTT client once */
-    // mqtt_init();
+    /* Initialize MQTT client once */
+    mqtt_init();
 
-    // /* Initialize controls - tasks and receiver code */
-    // controls_init();
+    /* Initialize controls - tasks and receiver code */
+    controls_init();
 
     // gpio_number_t led_pin = GPIO_NUMBER_2;
     // gpio_set_low(led_pin);
@@ -55,15 +55,18 @@ void app_main(void)
 
     // gpio_number_t led_pin = GPIO_NUMBER_2;
     // gpio_number_t led_pin = GPIO_NUMBER_2;
-    gpio_set_dir(GPIO_NUMBER_5, GPIO_OUTPUT);  // STEP
-    gpio_set_dir(GPIO_NUMBER_18, GPIO_OUTPUT); // DIR
 
-    gpio_set_low(GPIO_NUMBER_18);  // Set direction
 
-    while(1) {
-        gpio_set_high(GPIO_NUMBER_5);
-        vTaskDelay(100 / portTICK_PERIOD_MS);
-        gpio_set_low(GPIO_NUMBER_5);
-        vTaskDelay(100 / portTICK_PERIOD_MS);
-    }
+
+    // gpio_set_dir(GPIO_NUMBER_5, GPIO_OUTPUT);  // STEP
+    // gpio_set_dir(GPIO_NUMBER_18, GPIO_OUTPUT); // DIR
+
+    // gpio_set_low(GPIO_NUMBER_18);  // Set direction
+
+    // while(1) {
+    //     gpio_set_high(GPIO_NUMBER_5);
+    //     vTaskDelay(25 / portTICK_PERIOD_MS);
+    //     gpio_set_low(GPIO_NUMBER_5);
+    //     vTaskDelay(25 / portTICK_PERIOD_MS);
+    // }
 }
