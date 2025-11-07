@@ -7,4 +7,8 @@ void set_step_resolution();
 
 void set_motor_speed(uint8_t step_time_in_msec);
 
+void step();
+
+void move_to_angle(float target_angle);
+
 void drive_motor();
