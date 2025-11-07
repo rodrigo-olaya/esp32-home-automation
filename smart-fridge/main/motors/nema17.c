@@ -28,11 +28,4 @@ void drive_motor(){
     while(1){
         step();
     }    
-
-    // while(1) {
-    //     gpio_set_high(GPIO_NUMBER_5);
-    //     vTaskDelay(25 / portTICK_PERIOD_MS);
-    //     gpio_set_low(GPIO_NUMBER_5);
-    //     vTaskDelay(25 / portTICK_PERIOD_MS);
-    // }
 }
