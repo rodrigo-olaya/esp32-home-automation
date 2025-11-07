@@ -24,6 +24,7 @@
 #include "esp_log.h"
 #include "sensors/SHT_3x.h"
 #include "drivers/gpio_driver.h"
+#include "motors/nema17.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -40,4 +41,6 @@ void app_main(void)
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
+
+    drive_motor();
 }
