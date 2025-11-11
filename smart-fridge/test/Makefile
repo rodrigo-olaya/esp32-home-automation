@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -I/usr/local/include -g -Wall
+CXXFLAGS = -std=c++17 -I/usr/local/include -g -Wall -Wno-deprecated
 LDFLAGS = -L/usr/local/lib -lCppUTest -lCppUTestExt
 
-SRCS = temp_conversion_tdd.cpp ../main/data/handle_temperature.c
+SRCS = main_tdd.cpp temp_conversion_tdd.cpp ../main/data/handle_temperature.c calculateSteps_tdd.cpp ../main/motors/handlers/calculate_steps.c
 
 TARGET = runTests
 

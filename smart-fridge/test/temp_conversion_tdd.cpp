@@ -5,16 +5,12 @@ extern "C" {
     #include "../main/data/handle_temperature.h"
 }
 
-TEST_GROUP(FirstTestGroup)
+TEST_GROUP(TempConversionGroup)
 {
 };
 
-TEST(FirstTestGroup, FirstTest)
+TEST(TempConversionGroup, ConvertToFarenheit)
 {
    DOUBLES_EQUAL(convert_to_farenheit(20), 68.0, 0.01);
 }
 
-int main(int argc, char** argv)
-{
-    return CommandLineTestRunner::RunAllTests(argc, argv);
-}
