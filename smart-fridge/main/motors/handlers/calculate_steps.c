@@ -1,5 +1,6 @@
 #include "calculate_steps.h"
 
-double calculate_steps(double angle) {
-    return 0.0;
+int calculate_steps(double angle, float resolution) {
+    int steps =  angle / resolution;
+    return steps;
 }

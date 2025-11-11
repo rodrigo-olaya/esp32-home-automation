@@ -11,5 +11,5 @@ TEST_GROUP(motorGroup)
 
 TEST(motorGroup, calculateSteps)
 {
-   DOUBLES_EQUAL(calculate_steps(25), 35.0, 0.01);
+   LONGS_EQUAL(calculate_steps(45, 1.8), 25);
 }

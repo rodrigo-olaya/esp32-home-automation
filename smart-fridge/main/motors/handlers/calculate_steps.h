@@ -5,8 +5,10 @@
 extern "C" {
 #endif
 
-double calculate_steps(double angle);
+int calculate_steps(double angle, float step_resolution);
 
+#ifdef __cplusplus
 }
+#endif
 
 #endif

@@ -1,6 +1,7 @@
 #include "nema17.h"
 
 static uint8_t step_delay_in_msec = 50;
+static float step_resolution = 1.8;
 
 void set_step_resolution() {}
 
