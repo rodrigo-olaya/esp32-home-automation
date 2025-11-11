@@ -42,5 +42,5 @@ void app_main(void)
     /* Initialize controls - tasks and receiver code */
     controls_init();
 
-    drive_motor();
+    // drive_motor();
 }

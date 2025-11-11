@@ -15,8 +15,6 @@
  */
 void publish_data(sensorData_t *sensor_data);
 
-void receive_data();
-
 /**
  * @brief This function initializes MQTT communication
  */
