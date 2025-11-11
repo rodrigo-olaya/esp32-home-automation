@@ -2,6 +2,9 @@
 
 #include "../drivers/gpio_driver.h"
 #include "freertos/FreeRTOS.h"
+#include "esp_log.h"
+
+#include "handlers/calculate_steps.h"
 
 void set_step_resolution();
 

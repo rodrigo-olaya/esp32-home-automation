@@ -5,6 +5,8 @@
 #include "esp_log.h"
 #include "../sensors/sensor_defines.h"
 
+#include "../motors/nema17.h"
+
 #define TEMP_TOPIC "home/esp32/livingroom/temp"
 #define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
 #define HEATER_TOPIC "home/esp32/controls/heater"

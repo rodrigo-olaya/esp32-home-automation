@@ -8,5 +8,6 @@ idf_component_register(SRCS "main.c"
                             "WiFi/WiFi.c"
                             "drivers/gpio_driver.c"
                             "motors/nema17.c"
+                            "motors/handlers/calculate_steps.c"
                        PRIV_REQUIRES spi_flash mqtt nvs_flash esp_netif esp_wifi
                        INCLUDE_DIRS "config")

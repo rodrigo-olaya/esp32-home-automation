@@ -37,6 +37,7 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "TOPIC=%.*s\r", event->topic_len, event->topic);
             ESP_LOGI(TAG, "DATA=%.*s\r", event->data_len, event->data);
+            move_to_angle(45);
             break;
 
         case MQTT_EVENT_ERROR:
