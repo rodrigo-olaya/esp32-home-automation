@@ -36,29 +36,3 @@ void move_to_angle(float target_angle) {
         step();
     }
 }
-
-void drive_motor(){
-    gpio_number_t motor_step_gpio1 = GPIO_NUMBER_5;
-    gpio_number_t motor_dir_gpio1 = GPIO_NUMBER_18;
-
-    gpio_set_dir(motor_step_gpio1, GPIO_OUTPUT);  // STEP
-    gpio_set_dir(motor_dir_gpio1, GPIO_OUTPUT); // DIR
-
-    gpio_set_low(motor_dir_gpio1);  // Set direction
-
-    set_motor_speed(25);
-
-    ESP_LOGI(MOTOR_TAG, "Stepping");
-
-    while(1){
-        gpio_set_high(motor_step_gpio1);
-        vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
-        gpio_set_low(motor_step_gpio1);
-        vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
-    }    
-    // for (int i = 0; i < 25; i++){
-    //     ESP_LOGI(MOTOR_TAG, "Stepping");
-
-    //     step();
-    // }
-}
