@@ -40,7 +40,7 @@ void app_main(void)
     mqtt_init();
 
     /* Initialize controls - tasks and receiver code */
-    controls_init();
+    // controls_init();
 
     // drive_motor();
 }

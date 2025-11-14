@@ -56,4 +56,9 @@ void drive_motor(){
         gpio_set_low(motor_step_gpio1);
         vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
     }    
+    // for (int i = 0; i < 25; i++){
+    //     ESP_LOGI(MOTOR_TAG, "Stepping");
+
+    //     step();
+    // }
 }
