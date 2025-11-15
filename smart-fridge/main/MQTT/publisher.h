@@ -9,7 +9,7 @@
 
 #define TEMP_TOPIC "home/esp32/livingroom/temp"
 #define HUMIDITY_TOPIC "home/esp32/livingroom/humidity"
-#define HEATER_TOPIC "home/esp32/controls/heater"
+#define HEATER_TOPIC "home/esp32/controls/AC"
 
 /**
  * @brief This function publishes data to the MQTT broker in Raspberry Pi
