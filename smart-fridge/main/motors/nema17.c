@@ -14,6 +14,11 @@ void set_motor_speed(uint8_t target_delay_in_msec){
     step_delay_in_msec = target_delay_in_msec;
 }
 
+void set_direction(uint8_t direction){
+    gpio_set_dir(motor_step_gpio, direction);  // STEP
+    gpio_set_dir(motor_dir_gpio, direction); // DIR
+}
+
 void step() {
     gpio_set_high(motor_step_gpio);
     vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
@@ -23,8 +28,7 @@ void step() {
 
 void move_to_angle(float target_angle) {
     ESP_LOGI(MOTOR_TAG, "moving to requested angle");
-    gpio_set_dir(motor_step_gpio, GPIO_OUTPUT);  // STEP
-    gpio_set_dir(motor_dir_gpio, GPIO_OUTPUT); // DIR
+    set_direction(GPIO_OUTPUT);
 
     int target_steps = calculate_steps(target_angle, step_resolution);
 

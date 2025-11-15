@@ -23,7 +23,7 @@ void WiFi_init() {
 
     ESP_ERROR_CHECK(esp_wifi_connect());
 
-    vTaskDelay(pdMS_TO_TICKS(8000));
+    vTaskDelay(pdMS_TO_TICKS(15000));
 }    
     
     

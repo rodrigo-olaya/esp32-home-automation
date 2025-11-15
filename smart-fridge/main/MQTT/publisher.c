@@ -37,7 +37,7 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "TOPIC=%.*s\r", event->topic_len, event->topic);
             ESP_LOGI(TAG, "DATA=%.*s\r", event->data_len, event->data);
-            set_motor_speed(25);
+            set_motor_speed(10);
             move_to_angle(45);
             break;
 
@@ -75,6 +75,8 @@ void mqtt_init() {
         return;
     }
     ESP_LOGI(TAG, "Event registered");
+
+    vTaskDelay(pdMS_TO_TICKS(5000));
 
     esp_err_t client_start_ret = esp_mqtt_client_start(mqtt_client);
     if (client_start_ret != ESP_OK) {
