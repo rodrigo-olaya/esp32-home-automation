@@ -27,7 +27,14 @@ void set_motor_speed(uint8_t target_delay_in_msec){
 
 void set_direction(motor_direction_t direction){
     gpio_set_dir(motor_step_gpio, GPIO_OUTPUT);  // STEP
-    gpio_set_dir(motor_dir_gpio, direction); // DIR
+    gpio_set_dir(motor_dir_gpio, GPIO_OUTPUT); // DIR
+    if (direction == CLOCKWISE){
+        gpio_set_high(motor_dir_gpio);
+    }
+    else {
+        gpio_set_low(motor_dir_gpio);
+    }
+    vTaskDelay(pdMS_TO_TICKS(1));
 }
 
 void step() {
