@@ -35,19 +35,24 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
             break;
 
         case MQTT_EVENT_DATA:
+        {
             ESP_LOGI(TAG, "TOPIC=%.*s\r", event->topic_len, event->topic);
             ESP_LOGI(TAG, "DATA=%.*s\r", event->data_len, event->data);
 
-            char topic[sizeof(event->topic)+1];
-            snprintf(topic, sizeof(event->topic), "%s", event->topic);
+            char topic[event->topic_len + 1];
+            // snprintf(topic, event->topic_len, "%s", event->topic);
+            memcpy(topic, event->topic, event->topic_len);
+            topic[event->topic_len] = '\0';
 
             ESP_LOGI(TAG, "HANDLED TOPIC=%s", topic);
 
-            // if (topic == "home/esp32/controls/AC"){
-            //     configure_motor(event);
-            // }
-            set_motor_speed(50);
+            if (strcmp(topic, "home/esp32/controls/AC") == 0){
+                ESP_LOGI(TAG, "Calling config function");
+                configure_motor(event);
+            }
+            set_motor_speed(10);
             move_to_angle(25);
+        }
             break;
 
         case MQTT_EVENT_ERROR:

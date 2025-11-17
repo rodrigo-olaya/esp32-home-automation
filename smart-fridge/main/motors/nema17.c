@@ -11,10 +11,23 @@ static const char* MOTOR_TAG = "motor";
 void configure_motor(esp_mqtt_event_handle_t event) {
 
 
-    if (event->data == 'heat'){
+    // if (event->data == 'heat'){
+    //     set_direction(CLOCKWISE);
+    // }
+    // else if (event->data == 'cool'){
+    //     set_direction(COUNTERCLOCKWISE);
+    // }
+
+    char data[event->data_len + 1];
+    // snprintf(topic, event->topic_len, "%s", event->topic);
+    memcpy(data, event->data, event->data_len);
+    data[event->data_len] = '\0';
+    if (strcmp(data,"heat") == 0){
+        ESP_LOGI(MOTOR_TAG, "Configuring as heater");        
         set_direction(CLOCKWISE);
     }
-    else if (event->data == 'cool'){
+    else if (strcmp(data,"cool") == 0){
+        ESP_LOGI(MOTOR_TAG, "Configuring as cooler");
         set_direction(COUNTERCLOCKWISE);
     }
 }
@@ -46,8 +59,8 @@ void step() {
 
 void move_to_angle(float target_angle) {
     ESP_LOGI(MOTOR_TAG, "moving to requested angle");
-    set_direction(CLOCKWISE);
-    vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
+    // set_direction(CLOCKWISE);
+    // vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
 
     int target_steps = calculate_steps(target_angle, step_resolution);
 
