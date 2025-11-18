@@ -17,4 +17,6 @@ TEST(TempConversionGroup, ConvertToFarenheit)
 TEST(TempConversionGroup, RoundTemperature)
 {
     LONGS_EQUAL(round_temperature(50.0345), 50);
+    LONGS_EQUAL(round_temperature(40.5), 41);
+    LONGS_EQUAL(round_temperature(55.555), 56);
 }

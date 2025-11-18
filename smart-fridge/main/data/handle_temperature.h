@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <math.h>
+
 double convert_to_farenheit(double celsius);
 
 int round_temperature(double farenheit);
