@@ -44,7 +44,7 @@ void read_temperature (void *pvParameters) {
 
                 sensorData_t sensor_data;
                 sensor_data.type = TEMPERATURE;
-                sensor_data.data = temperature;
+                sensor_data.data = round(convert_to_farenheit(temperature));
 
                 sensor_send_data(&sensor_data);
                 vTaskDelay(pdMS_TO_TICKS(10000));

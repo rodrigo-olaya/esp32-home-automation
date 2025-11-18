@@ -11,6 +11,7 @@
 #include "../communication/gpio_config.h"
 #include "../control/control.h"
 #include "sensor_defines.h"
+#include "../data/handle_temperature.h"
 
 /**
  * @brief This function reads the temperature from the DS18B20 and calls the sensor control function with the function.
