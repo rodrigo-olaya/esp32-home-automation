@@ -49,8 +49,6 @@ void step() {
 
 void move_to_angle(float target_angle) {
     ESP_LOGI(MOTOR_TAG, "moving to requested angle");
-    // set_direction(CLOCKWISE);
-    // vTaskDelay(step_delay_in_msec / portTICK_PERIOD_MS);
 
     int target_steps = calculate_steps(target_angle, step_resolution);
 
