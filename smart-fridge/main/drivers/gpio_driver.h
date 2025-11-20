@@ -23,10 +23,23 @@ typedef enum {
     GPIO_NUMBER_18 = 18
 } gpio_number_t;
 
+/**
+ * @brief Set a GPIO pin as input or output
+ * @param gpio_pin GPIO pin that needs to be set
+ * @param direction GPIO_OUTPUT or GPIO_INPUT
+ */
 void gpio_set_dir(gpio_number_t gpio_pin, gpio_direction_t direction);
 
+/**
+ * @brief set a GPIO pin HIGH
+ * @param gpio_pin GPIO pin that needs to be set
+ */
 void gpio_set_high(gpio_number_t gpio_pin);
 
+/**
+ * @brief set a GPIO pin LOW
+ * @param gpio_pin GPIO pin that needs to be set
+ */
 void gpio_set_low(gpio_number_t gpio_pin);
 
 #endif // GPIO_DRIVER_H

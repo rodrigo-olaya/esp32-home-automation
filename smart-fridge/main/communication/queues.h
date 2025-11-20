@@ -11,7 +11,9 @@
 
 /**
  * @brief This function initializes the queues to communicate from sensors to HomeAssistant
- * @param sensor_data
+ * @return 
+ *      - 1 on success
+ *      - 0 on failure
  */
 uint8_t queues_init();
 
