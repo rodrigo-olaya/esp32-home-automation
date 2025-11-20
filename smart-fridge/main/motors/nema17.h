@@ -1,3 +1,6 @@
+#ifndef NEMA17_H
+#define NEMA17_H
+
 #include <inttypes.h>
 
 #include "../drivers/gpio_driver.h"
@@ -6,9 +9,6 @@
 #include "mqtt_client.h"
 
 #include "handlers/calculate_steps.h"
-
-#ifndef NEMA17_H
-#define NEMA17_H
 
 typedef enum {
     CLOCKWISE = 0,

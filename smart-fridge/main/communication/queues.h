@@ -1,3 +1,6 @@
+#ifndef QUEUES_H
+#define QUEUES_H
+
 #include <stdio.h>
 #include <inttypes.h>
 #include "sdkconfig.h"
@@ -11,3 +14,5 @@
  * @param sensor_data
  */
 uint8_t queues_init();
+
+#endif // QUEUES_H

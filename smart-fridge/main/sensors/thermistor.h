@@ -1,3 +1,6 @@
+#ifndef THERMISTOR_H
+#define THERMISTOR_H
+
 #include <stdio.h>
 #include <inttypes.h>
 #include "sdkconfig.h"
@@ -18,3 +21,5 @@
  * @param pvParameters Parameters needed my vTask creation
  */
 void read_temperature (void *pvParameters);
+
+#endif // THERMISTOR_H

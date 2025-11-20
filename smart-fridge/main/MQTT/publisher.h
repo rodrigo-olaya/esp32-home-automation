@@ -1,3 +1,6 @@
+#ifndef PUBLISHER_H
+#define PUBLISHER_H
+
 #include "../config/private_config.h"
 #include "string.h"
 #include "mqtt_client.h"
@@ -21,3 +24,5 @@ void publish_data(sensorData_t *sensor_data);
  * @brief This function initializes MQTT communication
  */
 void mqtt_init();
+
+#endif // PUBLISHER_H
