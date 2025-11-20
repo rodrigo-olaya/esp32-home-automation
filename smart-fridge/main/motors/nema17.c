@@ -9,17 +9,7 @@ static gpio_number_t motor_dir_gpio = GPIO_NUMBER_18;
 static const char* MOTOR_TAG = "motor";
 
 void configure_motor(esp_mqtt_event_handle_t event) {
-
-
-    // if (event->data == 'heat'){
-    //     set_direction(CLOCKWISE);
-    // }
-    // else if (event->data == 'cool'){
-    //     set_direction(COUNTERCLOCKWISE);
-    // }
-
     char data[event->data_len + 1];
-    // snprintf(topic, event->topic_len, "%s", event->topic);
     memcpy(data, event->data, event->data_len);
     data[event->data_len] = '\0';
     if (strcmp(data,"heat") == 0){
