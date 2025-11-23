@@ -4,6 +4,11 @@
 #include <stdint.h>
 
 typedef enum {
+    HIGH = 1,
+    LOW = 0
+} gpio_state_t;
+
+typedef enum {
     GPIO_INPUT = 0,
     GPIO_OUTPUT = 1
 } gpio_direction_t;

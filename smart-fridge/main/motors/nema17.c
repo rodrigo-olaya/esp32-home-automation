@@ -20,6 +20,10 @@ void configure_motor(esp_mqtt_event_handle_t event) {
         ESP_LOGI(MOTOR_TAG, "Configuring as cooler");
         set_direction(COUNTERCLOCKWISE);
     }
+    else if (strcmp(data,"OFF") == 0){
+        ESP_LOGI(MOTOR_TAG, "Configure AC OFF");
+        set_direction(COUNTERCLOCKWISE);
+    }
 }
 
 void set_step_resolution() {}
