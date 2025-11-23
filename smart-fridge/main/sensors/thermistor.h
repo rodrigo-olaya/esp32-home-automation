@@ -11,7 +11,7 @@
 #include "esp_log.h"
 #include <inttypes.h> 
 #include <portmacro.h>
-#include "../communication/gpio_config.h"
+#include "../drivers/gpio_config.h"
 #include "../control/control.h"
 #include "sensor_defines.h"
 #include "../data/handle_temperature.h"

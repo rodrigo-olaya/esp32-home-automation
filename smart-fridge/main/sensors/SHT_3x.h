@@ -3,7 +3,7 @@
 
 #include <sht3x.h>
 #include "esp_log.h"
-#include "../communication/gpio_config.h"
+#include "../drivers/gpio_config.h"
 #include "sensor_defines.h"
 #include "../control/control.h"
 

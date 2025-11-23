@@ -25,7 +25,18 @@ typedef enum {
     GPIO_NUMBER_8 = 8,
     GPIO_NUMBER_9 = 9,
     GPIO_NUMBER_10 = 10,
-    GPIO_NUMBER_18 = 18
+    GPIO_NUMBER_11 = 11,
+    GPIO_NUMBER_12 = 12,
+    GPIO_NUMBER_13 = 13,
+    GPIO_NUMBER_14 = 14,
+    GPIO_NUMBER_15 = 15,
+    GPIO_NUMBER_16 = 16,
+    GPIO_NUMBER_17 = 17,
+    GPIO_NUMBER_18 = 18,
+    GPIO_NUMBER_19 = 19,
+    GPIO_NUMBER_20 = 20,
+    GPIO_NUMBER_21 = 21,
+    GPIO_NUMBER_22 = 22
 } gpio_number_t;
 
 /**
@@ -46,5 +57,7 @@ void gpio_set_high(gpio_number_t gpio_pin);
  * @param gpio_pin GPIO pin that needs to be set
  */
 void gpio_set_low(gpio_number_t gpio_pin);
+
+gpio_state_t gpio_read(gpio_number_t gpio_pin);
 
 #endif // GPIO_DRIVER_H
