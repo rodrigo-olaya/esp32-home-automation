@@ -25,20 +25,23 @@
 #include "sensors/SHT_3x.h"
 #include "drivers/gpio_driver.h"
 #include "motors/nema17.h"
+#include "sensors/humidity_sensor.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    /* Initialize WiFi */
-    WiFi_init();
+    // /* Initialize WiFi */
+    // WiFi_init();
 
-    /* Initialize the queues */
-    queues_init();
+    // /* Initialize the queues */
+    // queues_init();
 
-    /* Initialize MQTT client once */
-    mqtt_init();
+    // /* Initialize MQTT client once */
+    // mqtt_init();
 
-    /* Initialize controls - tasks and receiver code */
-    controls_init();
+    // /* Initialize controls - tasks and receiver code */
+    // controls_init();
+
+    humidity_sensor_initialize();
 }
