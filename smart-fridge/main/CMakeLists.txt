@@ -7,8 +7,10 @@ idf_component_register(SRCS "main.c"
                             "MQTT/publisher.c"
                             "WiFi/WiFi.c"
                             "drivers/gpio_driver.c"
+                            "drivers/i2c_driver.c"
                             "motors/nema17.c"
                             "motors/handlers/calculate_steps.c"
                             "data/handle_temperature.c"
+                            "sensors/humidity_sensor.c"
                        PRIV_REQUIRES spi_flash mqtt nvs_flash esp_netif esp_wifi
                        INCLUDE_DIRS "config")
