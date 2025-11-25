@@ -17,5 +17,6 @@ void i2c_start();
 void i2c_stop();
 i2c_return_t i2c_write_byte(uint8_t data);
 uint8_t i2c_read_byte(bool send_ack);
+// void i2c_bus_reset();
 
 #endif //I2C_DRIVER_H
