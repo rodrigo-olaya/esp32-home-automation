@@ -7,4 +7,6 @@
 
 void humidity_sensor_initialize();
 
+void read_humidity_new();
+
 #endif // HUMIDITY_SENSOR_H

@@ -44,4 +44,5 @@ void app_main(void)
     // controls_init();
 
     humidity_sensor_initialize();
+    read_humidity_new();
 }
