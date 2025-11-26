@@ -30,4 +30,8 @@ void read_humidity_new() {
     uint8_t hum_crc = i2c_read_byte(false);
     i2c_stop();
     ESP_LOGI(HUMIDITY_TAG, "HUMIDITY MSB: %d, HUMIDITY LSB: %d", hum_msb, hum_lsb);
+
+    // not tested
+    double humidity = bytes_to_humidity(hum_msb, hum_lsb);
+    ESP_LOGI(HUMIDITY_TAG, "Humidity: %f", humidity);
 }

@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include "../drivers/i2c_driver.h"
 #include "esp_log.h"
+#include "../data/handle_humidity.h"
 
 void humidity_sensor_initialize();
 
