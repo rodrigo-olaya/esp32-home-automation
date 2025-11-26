@@ -8,7 +8,6 @@ void humidity_sensor_initialize() {
 }
 
 void read_humidity_new() {
-
     for (;;) {
         i2c_start();
         i2c_return_t ack1 = i2c_write_byte(sht3x_addr << 1);
@@ -32,7 +31,6 @@ void read_humidity_new() {
         i2c_stop();
         ESP_LOGI(HUMIDITY_TAG, "HUMIDITY MSB: %d, HUMIDITY LSB: %d", hum_msb, hum_lsb);
 
-        // not tested
         double humidity = bytes_to_humidity(hum_msb, hum_lsb);
 
         sensorData_t sensor_data;

@@ -44,7 +44,4 @@ void app_main(void)
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
-
-    
-    // read_humidity_new();
 }
