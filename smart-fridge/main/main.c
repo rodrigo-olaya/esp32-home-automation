@@ -31,18 +31,20 @@ extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-    // /* Initialize WiFi */
-    // WiFi_init();
+    /* Initialize WiFi */
+    WiFi_init();
 
-    // /* Initialize the queues */
-    // queues_init();
+    /* Initialize the queues */
+    queues_init();
 
-    // /* Initialize MQTT client once */
-    // mqtt_init();
-
-    // /* Initialize controls - tasks and receiver code */
-    // controls_init();
+    /* Initialize MQTT client once */
+    mqtt_init();
 
     humidity_sensor_initialize();
-    read_humidity_new();
+
+    /* Initialize controls - tasks and receiver code */
+    controls_init();
+
+    
+    // read_humidity_new();
 }
