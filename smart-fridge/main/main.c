@@ -24,8 +24,10 @@
 #include "esp_log.h"
 #include "sensors/SHT_3x.h"
 #include "drivers/gpio_driver.h"
+#include "drivers/i2c_driver.h"
 #include "motors/nema17.h"
 #include "sensors/humidity_sensor.h"
+#include "motors/encoder.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -40,7 +42,10 @@ void app_main(void)
     /* Initialize MQTT client once */
     mqtt_init();
 
-    humidity_sensor_initialize();
+    // humidity_sensor_initialize();
+    i2c_init();
+
+    encoder_init();
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
