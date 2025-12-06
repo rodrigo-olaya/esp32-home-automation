@@ -7,4 +7,6 @@
 
 void encoder_init();
 
+void read_angle();
+
 #endif

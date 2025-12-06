@@ -7,7 +7,7 @@
 #include "freertos/FreeRTOS.h"
 #include "esp_log.h"
 #include "mqtt_client.h"
-
+#include "encoder.h"
 #include "handlers/calculate_steps.h"
 
 typedef enum {

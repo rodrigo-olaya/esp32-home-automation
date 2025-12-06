@@ -62,5 +62,6 @@ void move_to_angle(float target_angle) {
         ESP_LOGI(MOTOR_TAG, "Stepping");
 
         step();
+        read_angle();
     }
 }
