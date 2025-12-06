@@ -9,6 +9,7 @@
 #include "mqtt_client.h"
 #include "encoder.h"
 #include "handlers/calculate_steps.h"
+#include "handlers/calculate_angle.h"
 
 typedef enum {
     CLOCKWISE = 0,

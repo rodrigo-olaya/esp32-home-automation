@@ -50,8 +50,8 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
                 ESP_LOGI(TAG, "Calling config function");
                 configure_motor(event);
             }
-            set_motor_speed(200);
-            move_to_angle(100);
+            set_motor_speed(50);
+            move_to_angle(90);
         }
             break;
 

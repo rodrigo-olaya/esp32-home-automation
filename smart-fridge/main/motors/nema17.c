@@ -58,10 +58,28 @@ void move_to_angle(float target_angle) {
 
     ESP_LOGI(MOTOR_TAG, "Target steps: %d", target_steps);
 
-    for (int i = 0; i < target_steps; i++){
-        ESP_LOGI(MOTOR_TAG, "Stepping");
-
-        step();
-        read_angle();
+    double current_angle = read_angle();
+    if (target_angle + current_angle >= 360){
+        target_angle = target_angle + current_angle - 360;
     }
+    else {
+        target_angle += current_angle;
+    }
+
+    ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
+    ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
+
+    while (current_angle < target_angle - 10 || current_angle > target_angle + 10) {
+        step();
+        current_angle = read_angle();
+        ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
+        ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
+    }
+
+    // for (int i = 0; i < target_steps; i++){
+    //     ESP_LOGI(MOTOR_TAG, "Stepping");
+
+    //     step();
+    //     read_angle();
+    // }
 }

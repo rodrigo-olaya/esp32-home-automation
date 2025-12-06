@@ -1,5 +1,5 @@
-#ifndef CALCULATE_ANGLE_H
-#define CALCULATE_ANGLE_H
+#ifndef CALCULATE_STEPS_H
+#define CALCULATE_STEPS_H
 
 #ifdef __cplusplus
 extern "C" {
