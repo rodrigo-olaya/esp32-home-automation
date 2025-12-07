@@ -45,10 +45,6 @@ void app_main(void)
     // humidity_sensor_initialize();
     i2c_init();
 
-    // encoder_init();
-
     /* Initialize controls - tasks and receiver code */
     controls_init();
-
-    // encoder_debug_mode_on();
 }
