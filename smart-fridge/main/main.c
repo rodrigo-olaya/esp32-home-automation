@@ -22,7 +22,6 @@
 #include "WiFi/WiFi.h"
 #include "esp_system.h"
 #include "esp_log.h"
-#include "sensors/SHT_3x.h"
 #include "drivers/gpio_driver.h"
 #include "drivers/i2c_driver.h"
 #include "motors/nema17.h"

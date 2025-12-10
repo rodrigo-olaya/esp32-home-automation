@@ -1,6 +1,5 @@
 #include "control.h"
 #include "../sensors/thermistor.h"
-#include "../sensors/SHT_3x.h"
 
 static const char* CONTROL_TAG = "control";
 
