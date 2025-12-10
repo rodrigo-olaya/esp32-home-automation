@@ -70,9 +70,11 @@ void move_to_angle(float target_angle) {
     ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
 
     while (current_angle < target_angle - 10 || current_angle > target_angle + 10) {
+        i2c_lock();
         step();
         current_angle = read_angle();
         ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
         ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
+        i2c_unlock();
     }
 }

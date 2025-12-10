@@ -9,6 +9,7 @@ void humidity_sensor_initialize() {
 
 void read_humidity_new() {
     for (;;) {
+        i2c_lock();
         i2c_start();
         i2c_return_t ack1 = i2c_write_byte(sht3x_addr << 1);
         ESP_LOGI(HUMIDITY_TAG, "ACK: %d", ack1);
@@ -39,6 +40,8 @@ void read_humidity_new() {
 
         sensor_send_data(&sensor_data);
         ESP_LOGI(HUMIDITY_TAG, "Humidity: %f", sensor_data.data);
+
+        i2c_unlock();
 
         vTaskDelay(pdMS_TO_TICKS(10000));
     }

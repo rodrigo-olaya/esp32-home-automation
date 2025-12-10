@@ -1,5 +1,15 @@
 #include "i2c_driver.h"
 
+static SemaphoreHandle_t i2c_mutex = NULL;
+
+void i2c_lock() {
+    xSemaphoreTake(i2c_mutex, portMAX_DELAY);
+}
+
+void i2c_unlock() {
+    xSemaphoreGive(i2c_mutex);
+}
+
 void i2c_release_serial_data() {
     gpio_set_dir(I2C_SDA_GPIO, GPIO_INPUT);
     ets_delay_us(10);
@@ -23,6 +33,7 @@ void i2c_pull_serial_clock_low() {
 }
 
 void i2c_init(){
+    i2c_mutex = xSemaphoreCreateMutex();
     gpio_set_dir(I2C_SCL_GPIO, GPIO_INPUT);
     gpio_set_dir(I2C_SDA_GPIO, GPIO_INPUT);
     ets_delay_us(10);

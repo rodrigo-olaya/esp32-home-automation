@@ -12,6 +12,9 @@ typedef enum {
     NACK = 1
 } i2c_return_t;
 
+void i2c_lock();
+void i2c_unlock();
+
 void i2c_release_serial_data();
 void i2c_release_serial_clock();
 void i2c_pull_serial_data_low();
