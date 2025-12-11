@@ -16,11 +16,20 @@ typedef enum {
     COUNTERCLOCKWISE = 1
 } motor_direction_t;
 
+// typedef enum {
+//     POSITION_LEFT = 350,
+//     POSITION_RIGHT = 50
+// } motor_position_t;
+
+void turn_heater_on();
+
+void turn_heater_off();
+
 /**
  * @brief Configures GPIO direction pin according to command
  * @param event MQTT event that carries what the motor needs to do
  */
-void configure_motor(esp_mqtt_event_handle_t event);
+void handle_motor_action(esp_mqtt_event_handle_t event);
 
 /**
  * @brief 
