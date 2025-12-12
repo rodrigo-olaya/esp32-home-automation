@@ -12,19 +12,17 @@ void handle_motor_action(esp_mqtt_event_handle_t event) {
     char data[event->data_len + 1];
     memcpy(data, event->data, event->data_len);
     data[event->data_len] = '\0';
-    if (strcmp(data,"heat") == 0){
-        ESP_LOGI(MOTOR_TAG, "Configuring as heater");        
+    if (strcmp(data,"heatHIGH") == 0){
+        ESP_LOGI(MOTOR_TAG, "Turning heat ON");        
         turn_heater_on();
-        
     }
     else if (strcmp(data,"cool") == 0){
         ESP_LOGI(MOTOR_TAG, "Configuring as cooler");
         set_direction(COUNTERCLOCKWISE);
     }
-    else if (strcmp(data,"OFF") == 0){
-        ESP_LOGI(MOTOR_TAG, "Configure AC OFF");
+    else if (strcmp(data,"heatOFF") == 0){
+        ESP_LOGI(MOTOR_TAG, "Turning heat OFF");
         turn_heater_off();
-        
     }
 }
 
@@ -60,33 +58,35 @@ void move_to_angle(float target_angle) {
 
     ESP_LOGI(MOTOR_TAG, "Target steps: %d", target_steps);
 
+    i2c_lock();
     double current_angle = read_angle();
 
     ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
     ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
 
-    while (current_angle < target_angle - 10 || current_angle > target_angle + 10) {
-        i2c_lock();
+    while (current_angle < target_angle - 5 || current_angle > target_angle + 5) {
         step();
         current_angle = read_angle();
         ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
         ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
-        i2c_unlock();
     }
+    i2c_unlock();
 }
 
 void turn_heater_on() {
     set_motor_speed(10);
     set_direction(CLOCKWISE);
-    move_to_angle(50.0);
+    move_to_angle(POSITION_RIGHT);
+    set_motor_speed(1);
     set_direction(COUNTERCLOCKWISE);
-    move_to_angle(55);
+    move_to_angle(POSITION_RIGHT + 5);
 }
 
 void turn_heater_off() {
     set_motor_speed(10);
     set_direction(COUNTERCLOCKWISE);
-    move_to_angle(350.0);
+    move_to_angle(POSITION_LEFT);
+    set_motor_speed(1);
     set_direction(CLOCKWISE);
-    move_to_angle(345);
+    move_to_angle(POSITION_LEFT - 5);
 }

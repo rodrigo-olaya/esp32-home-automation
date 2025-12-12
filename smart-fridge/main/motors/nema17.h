@@ -16,10 +16,10 @@ typedef enum {
     COUNTERCLOCKWISE = 1
 } motor_direction_t;
 
-// typedef enum {
-//     POSITION_LEFT = 350,
-//     POSITION_RIGHT = 50
-// } motor_position_t;
+typedef enum {
+    POSITION_LEFT = 350,
+    POSITION_RIGHT = 50
+} motor_position_t;
 
 void turn_heater_on();
 
