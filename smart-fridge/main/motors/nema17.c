@@ -61,12 +61,6 @@ void move_to_angle(float target_angle) {
     ESP_LOGI(MOTOR_TAG, "Target steps: %d", target_steps);
 
     double current_angle = read_angle();
-    // if (target_angle + current_angle >= 360){
-    //     target_angle = target_angle + current_angle - 360;
-    // }
-    // else {
-    //     target_angle += current_angle;
-    // }
 
     ESP_LOGI(MOTOR_TAG, "Target angle: %f", target_angle);
     ESP_LOGI(MOTOR_TAG, "Angle: %f", current_angle);
@@ -82,13 +76,17 @@ void move_to_angle(float target_angle) {
 }
 
 void turn_heater_on() {
+    set_motor_speed(10);
     set_direction(CLOCKWISE);
-    // move_to_angle(POSITION_RIGHT);
     move_to_angle(50.0);
+    set_direction(COUNTERCLOCKWISE);
+    move_to_angle(55);
 }
 
 void turn_heater_off() {
+    set_motor_speed(10);
     set_direction(COUNTERCLOCKWISE);
-    // move_to_angle(POSITION_LEFT);
     move_to_angle(350.0);
+    set_direction(CLOCKWISE);
+    move_to_angle(345);
 }
