@@ -45,7 +45,7 @@ int onewire_search(uint64_t *roms, int max_devices); // Find ROM codes of all de
 - All timing must be implemented with busy-wait/delay loops or hardware timers (no RTOS or vendor delay functions).
 - GPIO must be set to open-drain (or emulate with input/output switching).
 - No dynamic memory allocation required.
-- No Espressif/IDF/Arduino/FreeRTOS code or dependencies.
+- No Espressif/IDF/Arduino/ code or dependencies.
 
 ## References
 - Maxim Integrated Application Note 126: "1-Wire Communication Through Software"
