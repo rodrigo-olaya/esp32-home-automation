@@ -65,6 +65,15 @@ smart-fridge/main/config/private_config.h
 # Managed components
 smart-fridge/managed_components/
 
+temperature-control/build/*
+
+# Private addresses
+temperature-control/main/JSON/private.json
+temperature-control/main/config/private_config.h
+
+# Managed components
+temperature-control/managed_components/
+
 # Other
 .DS_Store
 .vscode/c_cpp_properties.json

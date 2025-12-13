@@ -44,7 +44,7 @@ The system maintains two operational states based on handle position:
 
 ### Heat ON Command
 **MQTT Topic:** home/esp32/controls/AC
-**MQTT Payload:** "heat"
+**MQTT Payload:** "heatHIGH"
 
 **Precondition:** Motor is at POSITION_LEFT (350°)
 
@@ -65,7 +65,7 @@ The system maintains two operational states based on handle position:
 
 ### Heat OFF Command
 **MQTT Topic:** home/esp32/controls/AC
-**MQTT Payload:** "OFF"
+**MQTT Payload:** "heatOFF"
 
 **Precondition:** Motor is at POSITION_RIGHT (50°)
 

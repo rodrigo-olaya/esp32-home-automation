@@ -1,4 +1,4 @@
 {
     "idf.pythonInstallPath": "/opt/miniconda3/bin/python",
-    "cmake.sourceDirectory": "/Users/rodrigoolaya/Documents/firmware/esp32-home-automation/smart-fridge"
+    "cmake.sourceDirectory": "/Users/rodrigoolaya/Documents/firmware/esp32-home-automation/temperature-control"
 }
