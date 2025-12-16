@@ -18,6 +18,4 @@ void onewire_write_byte(uint8_t byte);
 
 uint8_t onewire_read_byte(void);
 
-int onewire_search(uint64_t *roms, int max_devices);
-
 #endif // ONEWIRE_H

@@ -41,18 +41,22 @@ void onewire_write_bit(int bit) {
 int onewire_read_bit(void) {
     gpio_set_dir(onewire_pin, GPIO_OUTPUT);
     gpio_set_low(onewire_pin);
-    ets_delay_us(15);
+    ets_delay_us(1);
     gpio_set_dir(onewire_pin, GPIO_INPUT);
 
-    ets_delay_us(15);
+    ets_delay_us(14);
 
     int data = gpio_read(onewire_pin);
+
+    ets_delay_us(45);
 
     return data;
 }
 
-void onewire_write_byte(uint8_t byte);
+void onewire_write_byte(uint8_t byte) {
 
-uint8_t onewire_read_byte(void);
+}
 
-int onewire_search(uint64_t *roms, int max_devices);
+uint8_t onewire_read_byte(void) {
+
+}
