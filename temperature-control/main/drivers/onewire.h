@@ -2,6 +2,7 @@
 #define ONEWIRE_H
 
 #include <inttypes.h>
+#include "rom/ets_sys.h"
 #include "gpio_registers.h"
 #include "gpio_driver.h"
 
