@@ -54,9 +54,17 @@ int onewire_read_bit(void) {
 }
 
 void onewire_write_byte(uint8_t byte) {
-
+    for (int i = 0; i < 8; i++) {
+        onewire_write_bit( (byte >> i) & 1);
+    }
 }
 
 uint8_t onewire_read_byte(void) {
+    uint8_t data = 0;
 
+    for (int i = 0; i < 8; i++) {
+        data |= onewire_read_bit() << i;
+    }
+
+    return data;
 }
