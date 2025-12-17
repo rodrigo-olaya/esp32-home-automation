@@ -2,52 +2,59 @@
 
 static const char* THERMISTOR_TAG = "thermistor";
 
-void read_temperature (void *pvParameters) {
+// void read_temperature (void *pvParameters) {
 
-    float temperature;
+//     float temperature;
 
-    onewire_addr_t addr_list[4];
-    size_t found = 0;
+//     onewire_addr_t addr_list[4];
+//     size_t found = 0;
 
-    esp_err_t ret = ds18x20_scan_devices(FF_THERMISTOR_GPIO, addr_list, sizeof(addr_list), &found);
+//     esp_err_t ret = ds18x20_scan_devices(FF_THERMISTOR_GPIO, addr_list, sizeof(addr_list), &found);
 
-    if (ret != ESP_OK) {
-        ESP_LOGE(THERMISTOR_TAG, "Error finding devices: %X", ret);
-        return;
-    }
-    else {
-        uint8_t *addr_bytes = (uint8_t*)&addr_list[0];
-        printf("Address: ");
-        for (int i = 0; i < 8; i++) {
-            printf("%02X", addr_bytes[i]);
-        }
-        printf("\n");
-    }
+//     if (ret != ESP_OK) {
+//         ESP_LOGE(THERMISTOR_TAG, "Error finding devices: %X", ret);
+//         return;
+//     }
+//     else {
+//         uint8_t *addr_bytes = (uint8_t*)&addr_list[0];
+//         printf("Address: ");
+//         for (int i = 0; i < 8; i++) {
+//             printf("%02X", addr_bytes[i]);
+//         }
+//         printf("\n");
+//     }
 
-    for( ;; )
-        {
-            /* This function is needed before each thermistor read */
-            ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
-            if (ret != ESP_OK) {
-                ESP_LOGE(THERMISTOR_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
-                return;
-            }
-            /* Get one reading from thermistor */
-            ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
-            if (ret != ESP_OK) {
-                ESP_LOGE(THERMISTOR_TAG, "Error reading temp: %X", ret);
-                return;
-            }
-            else {
-                ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
-                ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
+//     for( ;; )
+//         {
+//             /* This function is needed before each thermistor read */
+//             ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
+//             if (ret != ESP_OK) {
+//                 ESP_LOGE(THERMISTOR_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
+//                 return;
+//             }
+//             /* Get one reading from thermistor */
+//             ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
+//             if (ret != ESP_OK) {
+//                 ESP_LOGE(THERMISTOR_TAG, "Error reading temp: %X", ret);
+//                 return;
+//             }
+//             else {
+//                 ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
+//                 ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
 
-                sensorData_t sensor_data;
-                sensor_data.type = TEMPERATURE;
-                sensor_data.data = round(convert_to_farenheit(temperature));
+//                 sensorData_t sensor_data;
+//                 sensor_data.type = TEMPERATURE;
+//                 sensor_data.data = round(convert_to_farenheit(temperature));
 
-                sensor_send_data(&sensor_data);
-                vTaskDelay(pdMS_TO_TICKS(10000));
-            }
-        }
+//                 sensor_send_data(&sensor_data);
+//                 vTaskDelay(pdMS_TO_TICKS(10000));
+//             }
+//         }
+// }
+
+void test_onewire() {
+    onewire_init(GPIO_NUMBER_4);
+    
+    int present = onewire_reset();
+    ESP_LOGI("1-WIRE", "Device present: %d", present);
 }

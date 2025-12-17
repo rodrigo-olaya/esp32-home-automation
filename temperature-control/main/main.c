@@ -27,6 +27,7 @@
 #include "motors/nema17.h"
 #include "sensors/humidity_sensor.h"
 #include "motors/encoder.h"
+#include "sensors/thermistor.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -46,4 +47,6 @@ void app_main(void)
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
+
+    test_onewire();
 }
