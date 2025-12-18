@@ -5,6 +5,8 @@
 #include "rom/ets_sys.h"
 #include "gpio_registers.h"
 #include "gpio_driver.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 void onewire_init(int gpio_pin);
 

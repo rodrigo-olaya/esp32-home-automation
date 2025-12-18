@@ -47,6 +47,4 @@ void app_main(void)
 
     /* Initialize controls - tasks and receiver code */
     controls_init();
-
-    test_onewire();
 }

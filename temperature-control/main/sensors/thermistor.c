@@ -52,9 +52,44 @@ static const char* THERMISTOR_TAG = "thermistor";
 //         }
 // }
 
-void test_onewire() {
+void read_temperature (void *pvParameters) {
     onewire_init(GPIO_NUMBER_4);
+
+    // int present = onewire_reset();
+    // ESP_LOGI("1-WIRE", "Device present: %d", present);
+
+    // onewire_write_byte(0xCC);
+    // onewire_write_byte(0x44);
+    // vTaskDelay(pdMS_TO_TICKS(750));
+
+    for (;;) {
+        uint8_t scratchpad[9];
+        int present = onewire_reset();
+        ESP_LOGI("1-WIRE", "Device present: %d", present);
+
+        onewire_write_byte(0xCC);
+        onewire_write_byte(0x44);
+        vTaskDelay(pdMS_TO_TICKS(750));
+
+        onewire_reset();
+
+        onewire_write_byte(0xCC);
+        onewire_write_byte(0xBE);
+
+        for (int i = 0; i < 9; i++) {
+            scratchpad[i] = onewire_read_byte();
+        }
+
+        ESP_LOGI(THERMISTOR_TAG, "Scratchpad: %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+            scratchpad[0], scratchpad[1], scratchpad[2], scratchpad[3], scratchpad[4],
+            scratchpad[5], scratchpad[6], scratchpad[7], scratchpad[8]);
     
-    int present = onewire_reset();
-    ESP_LOGI("1-WIRE", "Device present: %d", present);
+        // uint8_t temperature_lsb = onewire_read_byte();
+        // uint8_t temperature_msb = onewire_read_byte();
+
+        float temperature = raw_onewire_to_temp(scratchpad[1], scratchpad[0]);
+        ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
+
+        vTaskDelay(pdMS_TO_TICKS(5000));
+    }
 }
