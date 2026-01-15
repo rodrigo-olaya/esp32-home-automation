@@ -31,6 +31,7 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
             break;
 
         case MQTT_EVENT_DATA:
+        {
             ESP_LOGI(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
             ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
 
@@ -43,6 +44,7 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
                 ESP_LOGI(TAG, "Calling config function");
                 turn_camera_on_or_off(event);
             }
+        }
             break;
 
         case MQTT_EVENT_ERROR:
