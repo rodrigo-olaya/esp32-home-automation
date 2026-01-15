@@ -53,6 +53,13 @@ static camera_config_t camera_config = {
     .grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled
 };
 
+typedef enum {
+    CAM_OFF = 0,
+    CAM_ON = 1
+} camera_status_t;
+
 esp_err_t camera_init();
 
 esp_err_t camera_capture();
+
+void turn_camera_on_or_off(esp_mqtt_event_handle_t event);

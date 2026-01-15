@@ -33,6 +33,16 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
             ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
+
+            char topic[event->topic_len + 1];
+            memcpy(topic, event->topic, event->topic_len);
+            topic[event->topic_len] = '\0';
+            ESP_LOGI(TAG, "HANDLED TOPIC=%s", topic);
+
+            if (strcmp(topic, "home/esp32/controls/camera") == 0){
+                ESP_LOGI(TAG, "Calling config function");
+                turn_camera_on_or_off(event);
+            }
             break;
 
         case MQTT_EVENT_ERROR:

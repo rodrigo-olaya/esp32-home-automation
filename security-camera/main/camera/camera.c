@@ -2,6 +2,8 @@
 
 static const char *CAM_TAG = "camera";
 
+camera_status_t cam_status = 0;
+
 esp_err_t camera_init(){
     //initialize the camera
     esp_err_t err = esp_camera_init(&camera_config);
@@ -30,4 +32,23 @@ esp_err_t camera_capture(){
     //return the frame buffer back to the driver for reuse
     esp_camera_fb_return(fb);
     return ESP_OK;
+}
+
+void turn_camera_on_or_off(esp_mqtt_event_handle_t event) {
+    char data[event->data_len + 1];
+    memcpy(data, event->data, event->data_len);
+    data[event->data_len + 1] = '\0';
+
+    if (strcmp(data, "CAM_OFF") && cam_status == CAM_ON){
+        cam_status = CAM_ON;
+    }
+    else if (strcmp(data, "CAM_ON") && cam_status == CAM_OFF) {
+        cam_status = CAM_OFF;
+    }
+}
+
+void camera_handler(){
+    while (cam_status == CAM_ON) {
+        camera_capture();
+    }
 }
