@@ -1,3 +1,6 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include "esp_camera.h"
 #include <esp_log.h>
 #include <esp_system.h>
@@ -56,10 +59,14 @@ static camera_config_t camera_config = {
 typedef enum {
     CAM_OFF = 0,
     CAM_ON = 1
-} camera_status_t;
+} cam_status_t;
 
 esp_err_t camera_init();
 
 esp_err_t camera_capture();
 
 void turn_camera_on_or_off(esp_mqtt_event_handle_t event);
+
+void camera_handler();
+
+#endif //CAMERA_H

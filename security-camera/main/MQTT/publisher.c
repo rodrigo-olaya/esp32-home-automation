@@ -10,6 +10,10 @@ void event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t
 
     switch ((esp_mqtt_event_id_t) event_id) {
         case MQTT_EVENT_CONNECTED:
+            int message_id = esp_mqtt_client_subscribe_single(mqtt_client, CONTROL_TOPIC, 0);
+            if (message_id < 0) {
+                ESP_LOGE(TAG, "Not able to subscribe, returned %d", message_id);
+            }
             ESP_LOGI(TAG, "Event connected");
             mqtt_initialized = true;
             break;

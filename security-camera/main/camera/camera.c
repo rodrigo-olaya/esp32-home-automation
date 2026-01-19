@@ -2,7 +2,7 @@
 
 static const char *CAM_TAG = "camera";
 
-camera_status_t cam_status = 0;
+cam_status_t cam_status = CAM_OFF;
 
 esp_err_t camera_init(){
     //initialize the camera
@@ -37,18 +37,23 @@ esp_err_t camera_capture(){
 void turn_camera_on_or_off(esp_mqtt_event_handle_t event) {
     char data[event->data_len + 1];
     memcpy(data, event->data, event->data_len);
-    data[event->data_len + 1] = '\0';
+    data[event->data_len] = '\0';
 
-    if (strcmp(data, "CAM_OFF") && cam_status == CAM_ON){
-        cam_status = CAM_ON;
-    }
-    else if (strcmp(data, "CAM_ON") && cam_status == CAM_OFF) {
+    if (strcmp(data, "CAM_OFF") == 0 && cam_status == CAM_ON) {
+        ESP_LOGI(CAM_TAG, "Received Camera OFF command");
         cam_status = CAM_OFF;
+    }
+    else if (strcmp(data, "CAM_ON") == 0 && cam_status == CAM_OFF) {
+        ESP_LOGI(CAM_TAG, "Received Camera ON command");
+        cam_status = CAM_ON;
     }
 }
 
 void camera_handler(){
-    while (cam_status == CAM_ON) {
+    while (1){
+    if (cam_status == CAM_ON) {
+        ESP_LOGI(CAM_TAG, "calling capture");
         camera_capture();
+        
     }
-}
+vTaskDelay(pdMS_TO_TICKS(100));}}
