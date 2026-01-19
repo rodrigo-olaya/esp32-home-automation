@@ -28,12 +28,4 @@ void app_main(void)
     vTaskDelay(pdMS_TO_TICKS(2000));
 
     camera_handler();
-
-    // vTaskDelay(pdMS_TO_TICKS(2000));
-    
-    // while(1) {
-    //     camera_capture();
-        
-    //     vTaskDelay(pdMS_TO_TICKS(100));
-    // }
 }

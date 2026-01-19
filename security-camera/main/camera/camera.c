@@ -54,6 +54,6 @@ void camera_handler(){
     if (cam_status == CAM_ON) {
         ESP_LOGI(CAM_TAG, "calling capture");
         camera_capture();
-        
     }
-vTaskDelay(pdMS_TO_TICKS(100));}}
+    vTaskDelay(pdMS_TO_TICKS(100));
+}}
