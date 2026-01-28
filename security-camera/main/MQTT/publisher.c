@@ -109,5 +109,7 @@ void publish_data( camera_fb_t *fb) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);
     }else {
     ESP_LOGI(TAG, "Published successfully, msg_id: %d, size: %d bytes", message_id, fb->len);
+
+    message_id = esp_mqtt_client_publish(mqtt_client, BARCODE_SCANNER_CAM_TOPIC, mqtt_payload, fb->len, 0, false);
 }
 }

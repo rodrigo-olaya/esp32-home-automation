@@ -9,6 +9,9 @@
 #define CAM_TOPIC "home/esp32/camera"
 #define CONTROL_TOPIC "home/esp32/controls/camera"
 
+#define BARCODE_SCANNER_CAM_TOPIC "home/esp32/scanner/images"
+#define BARCODE_SCANNER_CONTROL_TOPIC "home/esp32/scanner/control"
+
 /**
  * @brief This function publishes data to the MQTT broker in Raspberry Pi
  * @param sensor_data struct that holds sensor type and sensor data
