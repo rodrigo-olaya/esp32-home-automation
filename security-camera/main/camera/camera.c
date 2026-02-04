@@ -55,5 +55,5 @@ void camera_handler(){
         ESP_LOGI(CAM_TAG, "calling capture");
         camera_capture();
     }
-    vTaskDelay(pdMS_TO_TICKS(100));
+    vTaskDelay(pdMS_TO_TICKS(1000));
 }}
