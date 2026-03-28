@@ -1,3 +1,11 @@
 .vscode/
 
 test/runTests
+
+schematics/esp32_carrier_board/#auto_saved_files#
+schematics/esp32_carrier_board/_autosave-esp32_carrier_board.kicad_sch
+schematics/esp32_carrier_board/esp32_carrier_board-backups/
+schematics/esp32_carrier_board/esp32_carrier_board.kicad_prl
+schematics/esp32_carrier_board/fp-info-cache
+schematics/esp32_carrier_board/sym-lib-table
+schematics/esp32_carrier_board/~esp32_carrier_board.kicad_sch.lck
