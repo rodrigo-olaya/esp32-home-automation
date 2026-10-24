@@ -28,11 +28,19 @@
 #include "sensors/humidity_sensor.h"
 #include "motors/encoder.h"
 #include "sensors/thermistor.h"
+#ifdef MOTOR_SWITCH_TEST
+#include "motors/torque_test.h"
+#endif
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
+#ifdef MOTOR_SWITCH_TEST
+    /* Test build only (see main/CMakeLists.txt): keyboard-driven motor test, no WiFi or MQTT */
+    torque_test_console();
+#endif
+
     /* Initialize WiFi */
     WiFi_init();
 
