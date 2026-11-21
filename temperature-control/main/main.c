@@ -24,23 +24,13 @@
 #include "esp_log.h"
 #include "drivers/gpio_driver.h"
 #include "drivers/i2c_driver.h"
-#include "motors/nema17.h"
 #include "sensors/humidity_sensor.h"
-#include "motors/encoder.h"
 #include "sensors/thermistor.h"
-#ifdef MOTOR_SWITCH_TEST
-#include "motors/torque_test.h"
-#endif
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-#ifdef MOTOR_SWITCH_TEST
-    /* Test build only (see main/CMakeLists.txt): keyboard-driven motor test, no WiFi or MQTT */
-    torque_test_console();
-#endif
-
     /* Initialize WiFi */
     WiFi_init();
 

@@ -2,7 +2,7 @@
 #include "CppUTest/CommandLineTestRunner.h"
 
 extern "C" {
-    #include "../main/motors/handlers/calculate_steps.h"
+    #include "../handlers/calculate_steps.h"
 }
 
 TEST_GROUP(motorGroup)

@@ -7,11 +7,7 @@ SRCS = \
 	temp_conversion_tdd.cpp \
 	humidity_conversion_tdd.cpp \
 	../main/data/handle_temperature.c \
-	../main/data/handle_humidity.c \
-	calculateSteps_tdd.cpp \
-	../main/motors/handlers/calculate_steps.c \
-	calculateAngleTDD.cpp \
-	../main/motors/handlers/calculate_angle.c
+	../main/data/handle_humidity.c
 
 TARGET = runTests
 

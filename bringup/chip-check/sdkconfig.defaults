@@ -1,0 +1,2 @@
+# DevKit V1 modules have 4 MB of flash
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
