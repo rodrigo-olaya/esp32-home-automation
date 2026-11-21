@@ -1,0 +1,10 @@
+/* Copy to private_config.h (gitignored) and fill in your own values. */
+#ifndef PRIVATE_CONFIG_H
+#define PRIVATE_CONFIG_H
+
+#define MQTT_BROKER_URI   "mqtt://<broker-ip>:1883"
+#define MQTT_PORT         1883
+#define WIFI_SSID         "<your-ssid>"
+#define WIFI_PWD          "<your-password>"
+
+#endif

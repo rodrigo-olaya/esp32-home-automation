@@ -1,53 +1,57 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
+# temperature-control
 
-# Hello World Example
+ESP32 node that reads temperature and humidity, publishes them over MQTT, and
+turns a wall thermostat on or off with a stepper motor on command.
 
-Starts a FreeRTOS task to print "Hello World".
+## What it does
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+- **Temperature:** DS18B20 on 1-Wire (GPIO4).
+- **Humidity:** SHT31 over I2C (address `0x44`).
+- **Heater control:** a NEMA17 driven by an A4988 (STEP GPIO5, DIR GPIO18) pushes the
+  thermostat switch. An AS5600 magnetic encoder gives position feedback so a lost
+  step doesn't leave the switch half-pushed.
+- **Firmware structure:** sensor tasks push readings into a FreeRTOS queue, and a
+  receiver task publishes them to MQTT. GPIO, I2C and 1-Wire are small bit-banged
+  drivers in `main/drivers`.
 
-## How to use example
+## MQTT topics
 
-Follow detailed instructions provided specifically for this example.
+| Topic | Direction | Payload |
+|---|---|---|
+| `home/esp32/livingroom/temp` | publish | temperature |
+| `home/esp32/livingroom/humidity` | publish | relative humidity |
+| `home/esp32/controls/AC` | subscribe | `heatHIGH`, `heatOFF`, `cool` |
 
-Select the instructions depending on Espressif chip installed on your development board:
+## Build and flash
 
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
+Requires [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/index.html) 5.x.
 
 ```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+cp main/config/private_config.h.example main/config/private_config.h   # then edit
+idf.py build
+idf.py -p <port> flash monitor
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+`private_config.h` holds the WiFi credentials and broker address and is gitignored.
 
-## Troubleshooting
+## Tests
 
-* Program upload failure
+Host-side unit tests (CppUTest) for the conversion and motor math:
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+```
+cd test && make test
+```
 
-## Technical support and feedback
+## Motor bench test
 
-Please use the following feedback channels:
+Keyboard-driven motor and encoder test, no WiFi or MQTT. It builds separately so the
+normal build isn't touched:
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+```
+idf.py -B test-build -D MOTOR_SWITCH_TEST=1 flash monitor
+```
 
-We will get back to you as soon as possible.
+## Hardware
+
+Carrier board: [../hardware/esp32_carrier_board](../hardware/esp32_carrier_board).
+Design notes are in [requirements/](requirements/).
