@@ -12,6 +12,30 @@ esp_err_t camera_init(){
         return err;
     }
 
+    // Tune OV2640 sensor registers for better image sharpness and barcode legibility
+    sensor_t *s = esp_camera_sensor_get();
+    if (s != NULL) {
+        s->set_sharpness(s, 2);      // Increase edge sharpness (range: -2 to 2 on OV2640)
+        s->set_denoise(s, 1);        // Light denoising to reduce JPEG artifacts without blurring edges
+        s->set_gainceiling(s, GAINCEILING_4X); // Cap gain to reduce noise in brighter conditions
+        s->set_whitebal(s, 1);       // Enable auto white balance
+        s->set_awb_gain(s, 1);       // Enable AWB gain
+        s->set_wb_mode(s, 0);        // Auto white balance mode
+        s->set_exposure_ctrl(s, 1);  // Enable auto exposure control
+        s->set_aec2(s, 1);           // Enable AEC DSP - better exposure in variable light
+        s->set_ae_level(s, 0);       // Neutral auto-exposure target level
+        s->set_brightness(s, 1);     // Slight brightness boost for contrast
+        s->set_contrast(s, 2);       // Slight contrast boost to make barcode bars crisper
+        s->set_sharpness(s,2);
+        s->set_saturation(s, 0);     // Neutral saturation (barcodes are B&W anyway)
+        s->set_lenc(s, 1);           // Enable lens correction to reduce vignetting
+        s->set_hmirror(s, 0);
+        s->set_vflip(s, 0);
+        ESP_LOGI(CAM_TAG, "Sensor tuning applied");
+    } else {
+        ESP_LOGW(CAM_TAG, "Could not get sensor handle for tuning");
+    }
+
     return ESP_OK;
 }
 

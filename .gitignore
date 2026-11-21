@@ -54,27 +54,38 @@ dkms.conf
 # debug information files
 *.dwo
 
-# build files
-*build/
-smart-fridge/build/*
+# ESP-IDF build output and fetched components
+build/
+test-build/
+managed_components/
+sdkconfig.old
 
-# Private addresses
-smart-fridge/main/JSON/private.json
-smart-fridge/main/config/private_config.h
+# Private WiFi/broker config (copy private_config.h.example)
+private_config.h
+main/JSON/private.json
 
-# Managed components
-smart-fridge/managed_components/
-
-temperature-control/build/*
-
-# Private addresses
-temperature-control/main/JSON/private.json
-temperature-control/main/config/private_config.h
-
-# Managed components
-temperature-control/managed_components/
-
-# Other
 .DS_Store
+
+# Editor / tool caches
+.cache/
 .vscode/c_cpp_properties.json
 
+# KiCad: lock files, autosaves, backups, per-user caches and view state
+*.lck
+*-backups/
+*-bak
+*.kicad_pcb-bak
+_autosave-*
+#auto_saved_files#
+fp-info-cache
+*.kicad_prl
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+secrets*
+
+# Local-only: generator scripts, notes, backups
+local-files/

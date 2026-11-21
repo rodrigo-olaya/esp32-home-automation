@@ -97,7 +97,7 @@ void mqtt_init() {
 
 void publish_data( camera_fb_t *fb) {
     ESP_LOGI(TAG, "Attempting to publish");
-    vTaskDelay(pdMS_TO_TICKS(100));
+    // Note: removed unnecessary 100ms delay that was holding the frame buffer locked
 
     const char* mqtt_payload = (const char*)fb->buf;
 
