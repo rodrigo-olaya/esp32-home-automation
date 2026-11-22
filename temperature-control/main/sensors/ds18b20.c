@@ -1,18 +1,18 @@
-#include "thermistor.h"
+#include "ds18b20.h"
 
-static const char* THERMISTOR_TAG = "thermistor";
+static const char* DS18B20_TAG = "ds18b20";
 
-// void read_temperature (void *pvParameters) {
+// void ds18b20_task (void *pvParameters) {
 
 //     float temperature;
 
 //     onewire_addr_t addr_list[4];
 //     size_t found = 0;
 
-//     esp_err_t ret = ds18x20_scan_devices(FF_THERMISTOR_GPIO, addr_list, sizeof(addr_list), &found);
+//     esp_err_t ret = ds18x20_scan_devices(DS18B20_GPIO, addr_list, sizeof(addr_list), &found);
 
 //     if (ret != ESP_OK) {
-//         ESP_LOGE(THERMISTOR_TAG, "Error finding devices: %X", ret);
+//         ESP_LOGE(DS18B20_TAG, "Error finding devices: %X", ret);
 //         return;
 //     }
 //     else {
@@ -26,21 +26,21 @@ static const char* THERMISTOR_TAG = "thermistor";
 
 //     for( ;; )
 //         {
-//             /* This function is needed before each thermistor read */
-//             ret = ds18x20_measure(FF_THERMISTOR_GPIO, addr_list[0], true);
+//             /* This function is needed before each DS18B20 read */
+//             ret = ds18x20_measure(DS18B20_GPIO, addr_list[0], true);
 //             if (ret != ESP_OK) {
-//                 ESP_LOGE(THERMISTOR_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
+//                 ESP_LOGE(DS18B20_TAG, "Scan failed: 0x%X (%s)", ret, esp_err_to_name(ret));
 //                 return;
 //             }
-//             /* Get one reading from thermistor */
-//             ret = ds18b20_read_temperature(FF_THERMISTOR_GPIO, addr_list[0], &temperature);
+//             /* Get one reading from the DS18B20 */
+//             ret = ds18b20_read_temperature(DS18B20_GPIO, addr_list[0], &temperature);
 //             if (ret != ESP_OK) {
-//                 ESP_LOGE(THERMISTOR_TAG, "Error reading temp: %X", ret);
+//                 ESP_LOGE(DS18B20_TAG, "Error reading temp: %X", ret);
 //                 return;
 //             }
 //             else {
-//                 ESP_LOGI(THERMISTOR_TAG, "Sending data to queue");
-//                 ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
+//                 ESP_LOGI(DS18B20_TAG, "Sending data to queue");
+//                 ESP_LOGI(DS18B20_TAG, "Data sent to queue: %f", temperature);
 
 //                 sensorData_t sensor_data;
 //                 sensor_data.type = TEMPERATURE;
@@ -52,7 +52,7 @@ static const char* THERMISTOR_TAG = "thermistor";
 //         }
 // }
 
-void read_temperature (void *pvParameters) {
+void ds18b20_task (void *pvParameters) {
     onewire_init(GPIO_NUMBER_4);
 
     // int present = onewire_reset();
@@ -80,7 +80,7 @@ void read_temperature (void *pvParameters) {
             scratchpad[i] = onewire_read_byte();
         }
 
-        ESP_LOGI(THERMISTOR_TAG, "Scratchpad: %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+        ESP_LOGI(DS18B20_TAG, "Scratchpad: %02X %02X %02X %02X %02X %02X %02X %02X %02X",
             scratchpad[0], scratchpad[1], scratchpad[2], scratchpad[3], scratchpad[4],
             scratchpad[5], scratchpad[6], scratchpad[7], scratchpad[8]);
     
@@ -88,7 +88,7 @@ void read_temperature (void *pvParameters) {
         // uint8_t temperature_msb = onewire_read_byte();
 
         float temperature = raw_onewire_to_temp(scratchpad[1], scratchpad[0]);
-        ESP_LOGI(THERMISTOR_TAG, "Data sent to queue: %f", temperature);
+        ESP_LOGI(DS18B20_TAG, "Data sent to queue: %f", temperature);
 
         vTaskDelay(pdMS_TO_TICKS(5000));
     }

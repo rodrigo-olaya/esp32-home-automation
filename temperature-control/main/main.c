@@ -15,7 +15,7 @@
 #include "esp_system.h"
 #include <inttypes.h>
 #include "esp_mac.h"
-// #include "sensors/thermistor.h"
+// #include "sensors/ds18b20.h"
 #include "control/control.h"
 #include "communication/queues.h"
 #include "WiFi/WiFi.h"
@@ -23,8 +23,8 @@
 #include "esp_log.h"
 #include "drivers/gpio_driver.h"
 #include "drivers/i2c_driver.h"
-#include "sensors/humidity_sensor.h"
-#include "sensors/thermistor.h"
+#include "sensors/sht31.h"
+#include "sensors/ds18b20.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
@@ -39,7 +39,7 @@ void app_main(void)
     /* Initialize MQTT client once */
     mqtt_init();
 
-    // humidity_sensor_initialize();
+    // sht31_init();
     i2c_init();
 
     /* Initialize controls - tasks and receiver code */

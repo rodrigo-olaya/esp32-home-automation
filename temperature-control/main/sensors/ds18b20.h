@@ -1,5 +1,5 @@
-#ifndef THERMISTOR_H
-#define THERMISTOR_H
+#ifndef DS18B20_H
+#define DS18B20_H
 
 #include <stdio.h>
 #include <inttypes.h>
@@ -18,6 +18,6 @@
  * @brief This function reads the temperature from the DS18B20 and calls the sensor control function with the function.
  * @param pvParameters Parameters needed my vTask creation
  */
-void read_temperature (void *pvParameters);
+void ds18b20_task (void *pvParameters);
 
-#endif // THERMISTOR_H
+#endif // DS18B20_H

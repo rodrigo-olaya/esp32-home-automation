@@ -8,7 +8,7 @@
 #include "freertos/task.h"
 #include "../MQTT/publisher.h"
 #include "../sensors/sensor_defines.h"
-#include "../sensors/humidity_sensor.h"
+#include "../sensors/sht31.h"
 
 extern QueueHandle_t xSensorDataQueue;
 

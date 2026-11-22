@@ -1,5 +1,5 @@
 #include "control.h"
-#include "../sensors/thermistor.h"
+#include "../sensors/ds18b20.h"
 
 static const char* CONTROL_TAG = "control";
 
@@ -45,11 +45,11 @@ void sensor_send_data(sensorData_t *sensor_data) {
 }
 
 void controls_init() {
-    /* Create the task that will read the thermistor data and send it to the receiver */
-    xTaskCreate( read_temperature, "Sender1", 4000, NULL, 1, NULL );
+    /* Create the task that will read the DS18B20 data and send it to the receiver */
+    xTaskCreate( ds18b20_task, "ds18b20", 4000, NULL, 1, NULL );
 
-    /* Create the task that will read humidity and send it to the receiver*/
-    xTaskCreate( read_humidity_new, "Sender2", 4000, NULL, 1, NULL);
+    /* Create the task that will read the SHT31 and send it to the receiver */
+    xTaskCreate( sht31_task, "sht31", 4000, NULL, 1, NULL);
 
     /* Create the task that will read from the queue. The task is created
     with priority 2, so above the priority of the sender tasks. */

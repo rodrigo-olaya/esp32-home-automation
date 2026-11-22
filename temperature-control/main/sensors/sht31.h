@@ -1,5 +1,5 @@
-#ifndef HUMIDITY_SENSOR_H
-#define HUMIDITY_SENSOR_H
+#ifndef SHT31_H
+#define SHT31_H
 
 #include <inttypes.h>
 #include "../drivers/i2c_driver.h"
@@ -7,8 +7,8 @@
 #include "../data/handle_humidity.h"
 #include "sensor_defines.h"
 
-void humidity_sensor_initialize();
+void sht31_init();
 
-void read_humidity_new();
+void sht31_task();
 
-#endif // HUMIDITY_SENSOR_H
+#endif // SHT31_H

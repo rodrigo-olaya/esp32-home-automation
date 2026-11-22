@@ -1,29 +1,29 @@
-#include "humidity_sensor.h"
+#include "sht31.h"
 #include "../control/control.h"
 
-static const char *HUMIDITY_TAG = "SHT3x";
-uint8_t sht3x_addr = 0x44;
+static const char *SHT31_TAG = "SHT31";
+uint8_t sht31_addr = 0x44;
 
-void humidity_sensor_initialize() {
+void sht31_init() {
     i2c_init();
 }
 
-void read_humidity_new() {
+void sht31_task() {
     for (;;) {
         i2c_lock();
         i2c_start();
-        i2c_return_t ack1 = i2c_write_byte(sht3x_addr << 1);
-        ESP_LOGI(HUMIDITY_TAG, "ACK: %d", ack1);
+        i2c_return_t ack1 = i2c_write_byte(sht31_addr << 1);
+        ESP_LOGI(SHT31_TAG, "ACK: %d", ack1);
         i2c_return_t ack2 = i2c_write_byte(0x2C);
-        ESP_LOGI(HUMIDITY_TAG, "ACK: %d", ack2);
+        ESP_LOGI(SHT31_TAG, "ACK: %d", ack2);
         i2c_return_t ack3 = i2c_write_byte(0x06);
-        ESP_LOGI(HUMIDITY_TAG, "ACK: %d", ack3);
+        ESP_LOGI(SHT31_TAG, "ACK: %d", ack3);
         i2c_stop();
 
         vTaskDelay(pdMS_TO_TICKS(20));
 
         i2c_start();
-        i2c_write_byte((sht3x_addr << 1) | 1);
+        i2c_write_byte((sht31_addr << 1) | 1);
         uint8_t temp_msb = i2c_read_byte(true);
         uint8_t temp_lsb = i2c_read_byte(true);
         uint8_t temp_crc = i2c_read_byte(true);
@@ -31,7 +31,7 @@ void read_humidity_new() {
         uint8_t hum_lsb = i2c_read_byte(true);
         uint8_t hum_crc = i2c_read_byte(false);
         i2c_stop();
-        ESP_LOGI(HUMIDITY_TAG, "HUMIDITY MSB: %d, HUMIDITY LSB: %d", hum_msb, hum_lsb);
+        ESP_LOGI(SHT31_TAG, "HUMIDITY MSB: %d, HUMIDITY LSB: %d", hum_msb, hum_lsb);
 
         double humidity = bytes_to_humidity(hum_msb, hum_lsb);
 
@@ -40,7 +40,7 @@ void read_humidity_new() {
         sensor_data.data = humidity;
 
         sensor_send_data(&sensor_data);
-        ESP_LOGI(HUMIDITY_TAG, "Humidity: %f", sensor_data.data);
+        ESP_LOGI(SHT31_TAG, "Humidity: %f", sensor_data.data);
 
         i2c_unlock();
 
