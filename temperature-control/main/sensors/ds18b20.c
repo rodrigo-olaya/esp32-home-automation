@@ -1,4 +1,5 @@
 #include "ds18b20.h"
+#include "../data/crc.h"
 
 static const char* DS18B20_TAG = "ds18b20";
 
@@ -88,12 +89,23 @@ void ds18b20_task (void *pvParameters) {
         ESP_LOGI(DS18B20_TAG, "Scratchpad: %02X %02X %02X %02X %02X %02X %02X %02X %02X",
             scratchpad[0], scratchpad[1], scratchpad[2], scratchpad[3], scratchpad[4],
             scratchpad[5], scratchpad[6], scratchpad[7], scratchpad[8]);
-    
-        // uint8_t temperature_lsb = onewire_read_byte();
-        // uint8_t temperature_msb = onewire_read_byte();
 
-        float temperature = raw_onewire_to_temp(scratchpad[1], scratchpad[0]);
-        ESP_LOGI(DS18B20_TAG, "Data sent to queue: %f", temperature);
+        /* Only a scratchpad that passes its CRC (and is not a dead bus) counts as a reading. */
+        if (ds18b20_scratchpad_valid(scratchpad)) {
+            float temperature = raw_onewire_to_temp(scratchpad[1], scratchpad[0]);
+
+            sensorData_t sensor_data;
+            sensor_data.type = TEMPERATURE;
+            sensor_data.data = round_temperature(convert_to_farenheit(temperature));
+
+            sensor_send_data(&sensor_data);
+            ESP_LOGI(DS18B20_TAG, "Data sent to queue: %f", sensor_data.data);
+
+            mark_sensor_seen(SENSOR_DS18B20);
+        }
+        else {
+            ESP_LOGW(DS18B20_TAG, "Invalid scratchpad (CRC failed or dead bus), discarded");
+        }
 
         /* The conversion already took DS18B20_CONVERSION_MS, so the full cycle is DS18B20_INTERVAL_MS. */
         vTaskDelay(pdMS_TO_TICKS(DS18B20_INTERVAL_MS - DS18B20_CONVERSION_MS));
