@@ -8,6 +8,14 @@ void sht31_init() {
     i2c_init();
 }
 
+bool sht31_probe() {
+    i2c_lock();
+    i2c_start();
+    i2c_return_t ack1 = i2c_write_byte(sht31_addr << 1);
+
+    return (ack1 == 0) ? true : false;
+}
+
 void sht31_task() {
     for (;;) {
         i2c_lock();

@@ -9,6 +9,7 @@
 #include "../MQTT/publisher.h"
 #include "../sensors/sensor_defines.h"
 #include "../sensors/sht31.h"
+#include "../discovery/discovery.h"
 
 extern QueueHandle_t xSensorDataQueue;
 

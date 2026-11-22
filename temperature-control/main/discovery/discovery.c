@@ -9,9 +9,8 @@ uint8_t discovery_scan(const discovery_probes_t *probes) {
     if (probes->ds18b20 != NULL) {
         ds18b20present = probes->ds18b20();
     }
-
     
-    return sht31present | (ds18b20present << 1);
+    return (sht31present << SHT31_BIT) | (ds18b20present << DS18B20_BIT);
 }
 
 uint8_t discovery_newly_found(uint8_t already_running, uint8_t found_now) {
@@ -24,7 +23,7 @@ uint8_t discovery_newly_found(uint8_t already_running, uint8_t found_now) {
         ds18b20NewlyFound = 1;
     }
     
-    return sht31NewlyFound | (ds18b20NewlyFound << 1);
+    return (sht31NewlyFound << SHT31_BIT) | (ds18b20NewlyFound << DS18B20_BIT);
 }
 
 uint8_t discovery_lost(uint8_t already_running, uint8_t found_now) {
@@ -37,5 +36,30 @@ uint8_t discovery_lost(uint8_t already_running, uint8_t found_now) {
         ds18b20Dropped = 1;
     }
     
-    return sht31Dropped | (ds18b20Dropped << 1);
+    return (sht31Dropped << SHT31_BIT) | (ds18b20Dropped << DS18B20_BIT);
 }
+
+uint8_t discovery_recently_seen(const discovery_health_t *health, uint32_t now_ms) {
+    uint8_t sht31Healthy = 0;
+    uint8_t ds18b20Healthy = 0;
+    
+    if (now_ms - health->sht31.last_seen_ms <= (health->sht31.interval_ms * 3)) {
+        sht31Healthy = 1;
+    }
+    if (now_ms - health->ds18b20.last_seen_ms <= (health->ds18b20.interval_ms * 3)) {
+        ds18b20Healthy = 1;
+    }
+ 
+    return (sht31Healthy << SHT31_BIT) | (ds18b20Healthy << DS18B20_BIT);
+}
+
+void discovery_step(discovery_state_t *state,
+    const discovery_probes_t *probes,
+    discovery_health_t *health,
+    uint32_t now_ms,
+    const discovery_actions_t *actions) {
+
+
+
+
+    }

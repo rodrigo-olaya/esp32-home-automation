@@ -45,6 +45,9 @@ void sensor_send_data(sensorData_t *sensor_data) {
 }
 
 void controls_init() {
+
+    uint8_t connectedBitmap = discovery_scan(const discovery_probes_t *probes);
+
     /* Create the task that will read the DS18B20 data and send it to the receiver */
     xTaskCreate( ds18b20_task, "ds18b20", 4000, NULL, 1, NULL );
 

@@ -52,6 +52,10 @@ static const char* DS18B20_TAG = "ds18b20";
 //         }
 // }
 
+bool ds18b20_probe() {
+    return onewire_reset();
+}
+
 void ds18b20_task (void *pvParameters) {
     onewire_init(GPIO_NUMBER_4);
 

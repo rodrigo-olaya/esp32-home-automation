@@ -8,7 +8,7 @@
 #include "sensor_defines.h"
 
 void sht31_init();
-
+bool sht31_probe();
 void sht31_task();
 
 #endif // SHT31_H

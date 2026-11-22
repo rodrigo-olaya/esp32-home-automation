@@ -20,4 +20,6 @@
  */
 void ds18b20_task (void *pvParameters);
 
+bool ds18b20_probe();
+
 #endif // DS18B20_H

@@ -19,6 +19,19 @@
  *       Returns the sensors that have a task but stopped answering. The discovery
  *       task stops those tasks, and clears them from its "running" mask.
  *
+ * Staleness (how a running sensor is noticed going silent). Added to discovery.h:
+ *
+ *   typedef struct {
+ *       uint32_t last_seen_ms;   // tick time of the newest VALID reading from this sensor
+ *       uint32_t interval_ms;    // how often it is supposed to report
+ *   } sensor_health_t;
+ *   typedef struct { sensor_health_t sht31; sensor_health_t ds18b20; } discovery_health_t;
+ *   #define DISCOVERY_MISSED_READINGS 3     // readings a sensor may miss before it is stale
+ *
+ *   uint8_t discovery_recently_seen(const discovery_health_t *health, uint32_t now_ms);
+ *       Returns a bitmask of the sensors that reported recently enough. Feed it to
+ *       discovery_lost() as found_now for sensors that already have a task.
+ *
  * The real probes (I2C ack at 0x44, 1-Wire presence pulse) are plugged in on the
  * board. Here they are fakes, so none of this needs hardware.
  *
@@ -232,4 +245,96 @@ TEST(DiscoveryGroup, BootWithNothingAttachedThenASensorAppearsLater)
 
     LONGS_EQUAL(0, to_start_at_boot);
     LONGS_EQUAL(SENSOR_SHT31, to_start_later);
+}
+
+/* ---- discovery_recently_seen: staleness from the time of the last valid reading ---- */
+
+TEST_GROUP(DiscoveryHealthGroup)
+{
+    discovery_health_t health;
+    uint32_t now;
+
+    void setup()
+    {
+        now = 100000;
+        health.sht31.interval_ms = 10000;      /* sht31_task reads every 10 s */
+        health.ds18b20.interval_ms = 6000;     /* ds18b20_task reads every ~6 s */
+        health.sht31.last_seen_ms = now;
+        health.ds18b20.last_seen_ms = now;
+    }
+};
+
+// Pins down: sensors that just reported are both reported as seen.
+TEST(DiscoveryHealthGroup, SensorsThatJustReportedAreSeen)
+{
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_SHT31 | SENSOR_DS18B20, seen);
+}
+
+// Pins down: one missed reading is tolerated (3 are allowed). SHT31 is 15 s quiet = 1.5 intervals.
+TEST(DiscoveryHealthGroup, OneMissedReadingDoesNotMakeASensorStale)
+{
+    health.sht31.last_seen_ms = now - 15000;
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_SHT31 | SENSOR_DS18B20, seen);
+}
+
+// Pins down: a sensor silent for more than 3 of its own intervals is stale, the other is not.
+TEST(DiscoveryHealthGroup, SensorSilentForMoreThanThreeIntervalsIsStale)
+{
+    health.sht31.last_seen_ms = now - 40000;    /* 4 intervals of 10 s */
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_DS18B20, seen);
+}
+
+// Pins down: each sensor is judged against its own interval, not one shared timeout.
+// 20 s of silence is 2 SHT31 intervals (fine) but 3.3 DS18B20 intervals (stale).
+TEST(DiscoveryHealthGroup, EachSensorIsJudgedAgainstItsOwnInterval)
+{
+    health.sht31.last_seen_ms = now - 20000;
+    health.ds18b20.last_seen_ms = now - 20000;
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_SHT31, seen);
+}
+
+// Pins down: the tick counter wrapping around (about every 49 days) must not make a healthy
+// sensor look stale. The last reading was 512 ms before `now`, across the wrap.
+TEST(DiscoveryHealthGroup, TimerWraparoundDoesNotMakeASensorLookStale)
+{
+    health.sht31.last_seen_ms = 0xFFFFFF00u;
+    health.ds18b20.last_seen_ms = 0xFFFFFF00u;
+    now = 0x00000100u;
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_SHT31 | SENSOR_DS18B20, seen);
+}
+
+// Pins down: the boundary. The SHT31 last reported exactly 3 intervals (30 s) ago.
+// The third reading is only due right now, not missed yet, so the sensor is still alive.
+// It becomes stale once it is MORE than 3 intervals quiet.
+TEST(DiscoveryHealthGroup, SensorSilentForExactlyThreeIntervalsIsStillAlive)
+{
+    health.sht31.last_seen_ms = now - 3 * health.sht31.interval_ms;
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_SHT31 | SENSOR_DS18B20, seen);
+}
+
+// Pins down: one millisecond past 3 intervals is stale.
+TEST(DiscoveryHealthGroup, SensorSilentForOneMillisecondMoreThanThreeIntervalsIsStale)
+{
+    health.sht31.last_seen_ms = now - 3 * health.sht31.interval_ms - 1;
+
+    uint8_t seen = discovery_recently_seen(&health, now);
+
+    LONGS_EQUAL(SENSOR_DS18B20, seen);
 }

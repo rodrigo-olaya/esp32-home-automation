@@ -14,13 +14,16 @@ CPP_SRCS = \
 	main_tdd.cpp \
 	temp_conversion_tdd.cpp \
 	humidity_conversion_tdd.cpp \
-	discovery_tdd.cpp
+	discovery_tdd.cpp \
+	crc_tdd.cpp \
+	discovery_step_tdd.cpp
 
 # Firmware sources under test (C), paths relative to ../main
 C_SRCS = \
 	data/handle_temperature.c \
 	data/handle_humidity.c \
-	discovery/discovery.c
+	discovery/discovery.c \
+	data/crc.c
 
 OBJDIR = obj
 OBJS = $(CPP_SRCS:%.cpp=$(OBJDIR)/%.o) $(C_SRCS:%.c=$(OBJDIR)/%.o)
