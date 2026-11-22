@@ -59,7 +59,54 @@ void discovery_step(discovery_state_t *state,
     uint32_t now_ms,
     const discovery_actions_t *actions) {
 
+        // bool sht31Seen = false;
+        // bool ds18b20Seen = false;
 
+        uint8_t sht31Running = state->running & SENSOR_SHT31;
+        uint8_t ds18b20Running = state->running & SENSOR_DS18B20;
 
+        discovery_probes_t nonRunningProbes;
+        if (sht31Running == 1) {
+            nonRunningProbes.sht31 = NULL;
+        }
+        else {
+            nonRunningProbes.sht31 = probes->sht31;
+        }
+        if (ds18b20Running == 1) {
+            nonRunningProbes.ds18b20 = NULL;
+        }
+        else {
+            nonRunningProbes.ds18b20 = probes->ds18b20;
+        }
 
+        uint8_t discoveryBitmask = discovery_scan(&nonRunningProbes);
+
+        // uint8_t sht31Seen = discoveryBitmask & SENSOR_SHT31;
+        // uint8_t ds18b20Seen = discoveryBitmask & SENSOR_SHT31;
+
+        uint8_t newlyFound = discovery_newly_found(state->running, discoveryBitmask);
+
+        // uint8_t newlyLost = discovery_lost(state->running, discoveryBitmask);
+
+        if ((newlyFound & SENSOR_SHT31) == SENSOR_SHT31){
+            actions->start(SENSOR_SHT31);
+            health->sht31.last_seen_ms = now_ms;
+            state->running |= SENSOR_SHT31;
+        }
+        if ((newlyFound & SENSOR_DS18B20) == SENSOR_DS18B20){
+            actions->start(SENSOR_DS18B20);
+            health->ds18b20.last_seen_ms = now_ms;
+            state->running |= SENSOR_DS18B20;
+        }
+        
+        uint8_t recentlySeen = discovery_recently_seen(health, now_ms);
+
+        if ((recentlySeen & SENSOR_SHT31) != SENSOR_SHT31){
+            actions->stop(SENSOR_SHT31);
+            state->running &= ~(SENSOR_SHT31); 
+        }
+        if ((recentlySeen & SENSOR_DS18B20) != SENSOR_DS18B20){
+            actions->stop(SENSOR_DS18B20);
+            state->running &= ~(SENSOR_DS18B20); 
+        }
     }

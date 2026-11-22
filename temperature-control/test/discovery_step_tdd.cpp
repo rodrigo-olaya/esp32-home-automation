@@ -229,8 +229,8 @@ TEST(DiscoveryStepGroup, NewlyStartedSensorIsNotStoppedBeforeItHasHadTimeToRepor
 
 // Pins down: a task that hung but whose sensor is still electrically present.
 // The SHT31 task has gone silent for 4 intervals, but the probe would still answer.
-// Design choice: is the task stopped and restarted in the SAME pass (fast recovery), or only
-// stopped now and started on the NEXT pass?
+// Design choice (decided): the task is only stopped in this pass and is not probed until the NEXT
+// pass, so a flaky sensor is never stopped and restarted within the same pass.
 TEST(DiscoveryStepGroup, SilentSensorThatStillAnswersTheProbe)
 {
     state.running = SENSOR_SHT31 | SENSOR_DS18B20;
@@ -239,7 +239,19 @@ TEST(DiscoveryStepGroup, SilentSensorThatStillAnswersTheProbe)
 
     step();
 
-    // TODO(you): after this one pass, how many times was the SHT31 stopped, how many times started,
-    // and is it in state.running? Decide the behaviour, then assert it.
-    FAIL("TODO(you): design choice not made yet");
+    /* this pass: stopped once, not probed, not restarted */
+    LONGS_EQUAL(1, stopped_count);
+    LONGS_EQUAL(SENSOR_SHT31, stopped[0]);
+    LONGS_EQUAL(0, started_count);
+    LONGS_EQUAL(0, sht31_probe_calls);
+    LONGS_EQUAL(SENSOR_DS18B20, state.running);
+
+    /* next pass: it is probed, answers, and gets a fresh task */
+    now += 5000;
+    step();
+
+    LONGS_EQUAL(1, stopped_count);
+    LONGS_EQUAL(1, started_count);
+    LONGS_EQUAL(SENSOR_SHT31, started[0]);
+    LONGS_EQUAL(SENSOR_SHT31 | SENSOR_DS18B20, state.running);
 }
