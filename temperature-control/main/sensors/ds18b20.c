@@ -96,6 +96,7 @@ void ds18b20_task (void *pvParameters) {
 
             sensorData_t sensor_data;
             sensor_data.type = TEMPERATURE;
+            sensor_data.source = SENSOR_DS18B20;
             sensor_data.data = round_temperature(convert_to_farenheit(temperature));
 
             sensor_send_data(&sensor_data);

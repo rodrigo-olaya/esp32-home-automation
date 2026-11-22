@@ -19,11 +19,6 @@ void vReceiverTask( void *pvParameters )
 
     for( ;; )
     {
-        /* This call should always find the queue empty */
-        if( uxQueueMessagesWaiting( xSensorDataQueue ) != 0 )
-        {
-            ESP_LOGE(CONTROL_TAG, "Queue should have been empty");
-        }
         /* Receive data from the queue. */
         xStatus = xQueueReceive( xSensorDataQueue, &sensor_data, xTicksToWait );
         if( xStatus == pdPASS )
@@ -123,5 +118,5 @@ void controls_init() {
     
     /* Create the task that will read from the queue. The task is created
     with priority 2, so above the priority of the sender tasks. */
-    xTaskCreate( vReceiverTask, "Receiver", 2048, NULL, 2, NULL );
+    xTaskCreate( vReceiverTask, "Receiver", 4096, NULL, 2, NULL );
 }

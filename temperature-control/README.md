@@ -16,8 +16,11 @@ The old stepper-motor thermostat control is retired and lives in [legacy/motor](
 
 | Topic | Direction | Payload |
 |---|---|---|
-| `home/esp32/livingroom/temp` | publish | temperature |
-| `home/esp32/livingroom/humidity` | publish | relative humidity |
+| `home/esp32/<location>/temp` | publish | temperature in °F |
+| `home/esp32/<location>/humidity` | publish | relative humidity |
+
+`<location>` is per sensor, not per board: `SHT31_LOCATION` and `DS18B20_LOCATION` in
+`main/config/private_config.h` (for example `bedroom` and `fridge`).
 
 ## Build and flash
 
@@ -30,11 +33,6 @@ make flash PORT=/dev/cu.usbserial-0001    # flashes, then opens the monitor (Ctr
 ```
 
 `private_config.h` holds the WiFi credentials and broker address and is gitignored.
-
-**Known gap:** the firmware doesn't yet check that its sensors are connected. With no SHT31 it
-publishes a bogus 100 % humidity, and with no DS18B20 it reads garbage. Sensor discovery is
-planned. Until then, only flash a board that has both sensors attached. Use
-[../bringup](../bringup) to check hardware.
 
 ## Tests
 

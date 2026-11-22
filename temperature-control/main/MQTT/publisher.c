@@ -1,6 +1,16 @@
 #include "publisher.h"
+#include "topic.h"
 
 static const char* TAG = "publisher";
+
+/* Where each sensor on this node is (set in config/private_config.h). */
+static const char *location_for(sensor_flag_t source) {
+    switch (source) {
+        case SENSOR_SHT31:   return SHT31_LOCATION;
+        case SENSOR_DS18B20: return DS18B20_LOCATION;
+        default:             return "unknown";
+    }
+}
 
 static bool mqtt_initialized = false;
 static esp_mqtt_client_handle_t mqtt_client = NULL;
@@ -92,21 +102,18 @@ void mqtt_init() {
 
 void publish_data(sensorData_t *sensor_data) {
     ESP_LOGI(TAG, "Attempting to publish");
-    vTaskDelay(pdMS_TO_TICKS(100));
 
     char mqtt_payload[64];
     snprintf(mqtt_payload, sizeof(mqtt_payload), "%f", sensor_data->data);
 
-    int message_id;
+    char topic[64];
+    if (!build_topic(topic, sizeof(topic), location_for(sensor_data->source), sensor_data->type)) {
+        ESP_LOGE(TAG, "Could not build a topic for source %d, reading dropped", (int)sensor_data->source);
+        return;
+    }
 
-    if (sensor_data->type == TEMPERATURE){
-        ESP_LOGI(TAG, "Temp: %f", sensor_data->data);
-        message_id = esp_mqtt_client_publish(mqtt_client, TEMP_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
-    }
-    else {
-        ESP_LOGI(TAG, "Humidity: %f", sensor_data->data);
-        message_id = esp_mqtt_client_publish(mqtt_client, HUMIDITY_TOPIC, mqtt_payload, strlen(mqtt_payload), 0, false);
-    }
+    ESP_LOGI(TAG, "%s: %f", topic, sensor_data->data);
+    int message_id = esp_mqtt_client_publish(mqtt_client, topic, mqtt_payload, strlen(mqtt_payload), 0, false);
 
     if (message_id != 0) {
         ESP_LOGE(TAG, "Message was not sent, returned %d", message_id);

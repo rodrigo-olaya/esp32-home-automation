@@ -12,3 +12,8 @@ float raw_onewire_to_temp(uint8_t msb, uint8_t lsb) {
     int16_t raw = (msb << 8) | lsb;
     return raw / 16.0;    
 }
+
+float raw_sht31_to_temp(uint8_t msb, uint8_t lsb) {
+    uint16_t raw = (msb << 8) | lsb;
+    return -45 + ((175.0 * raw) / 65535);
+}
