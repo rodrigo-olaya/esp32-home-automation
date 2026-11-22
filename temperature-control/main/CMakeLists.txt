@@ -10,7 +10,9 @@ idf_component_register(SRCS "main.c"
                             "drivers/onewire.c"
                             "data/handle_temperature.c"
                             "data/handle_humidity.c"
+                            "data/crc.c"
+                            "discovery/discovery.c"
                             "sensors/sht31.c"
-                       PRIV_REQUIRES spi_flash mqtt nvs_flash esp_netif esp_wifi
+                       PRIV_REQUIRES spi_flash mqtt nvs_flash esp_netif esp_wifi esp_timer
                        INCLUDE_DIRS "config")
 

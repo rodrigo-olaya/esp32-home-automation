@@ -13,6 +13,7 @@
 #include "sensor_defines.h"
 #include "../data/handle_temperature.h"
 #include "../drivers/onewire.h"
+#include "../data/crc.h"
 
 /**
  * @brief This function reads the temperature from the DS18B20 and calls the sensor control function with the function.

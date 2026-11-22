@@ -58,10 +58,6 @@ void discovery_step(discovery_state_t *state,
     discovery_health_t *health,
     uint32_t now_ms,
     const discovery_actions_t *actions) {
-
-        // bool sht31Seen = false;
-        // bool ds18b20Seen = false;
-
         uint8_t sht31Running = state->running & SENSOR_SHT31;
         uint8_t ds18b20Running = state->running & SENSOR_DS18B20;
 
@@ -80,13 +76,7 @@ void discovery_step(discovery_state_t *state,
         }
 
         uint8_t discoveryBitmask = discovery_scan(&nonRunningProbes);
-
-        // uint8_t sht31Seen = discoveryBitmask & SENSOR_SHT31;
-        // uint8_t ds18b20Seen = discoveryBitmask & SENSOR_SHT31;
-
         uint8_t newlyFound = discovery_newly_found(state->running, discoveryBitmask);
-
-        // uint8_t newlyLost = discovery_lost(state->running, discoveryBitmask);
 
         if ((newlyFound & SENSOR_SHT31) == SENSOR_SHT31){
             actions->start(SENSOR_SHT31);
@@ -109,4 +99,4 @@ void discovery_step(discovery_state_t *state,
             actions->stop(SENSOR_DS18B20);
             state->running &= ~(SENSOR_DS18B20); 
         }
-    }
+}

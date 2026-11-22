@@ -12,6 +12,8 @@ bool sht31_probe() {
     i2c_lock();
     i2c_start();
     i2c_return_t ack1 = i2c_write_byte(sht31_addr << 1);
+    i2c_stop();
+    i2c_unlock();
 
     return (ack1 == 0) ? true : false;
 }
@@ -52,6 +54,12 @@ void sht31_task() {
 
         i2c_unlock();
 
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        uint8_t tempData[2] = { temp_msb, temp_lsb };
+        uint8_t humData[2] = { hum_msb, hum_lsb };
+        if (crc8_sht31(tempData, 2) == temp_crc && crc8_sht31(humData, 2) == hum_crc) {
+            mark_sensor_seen(SENSOR_SHT31);
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(SHT31_INTERVAL_MS));
     }
 }

@@ -2,6 +2,9 @@
 
 static const char* DS18B20_TAG = "ds18b20";
 
+/* Time the DS18B20 needs to finish a 12-bit conversion (datasheet max 750 ms). */
+#define DS18B20_CONVERSION_MS 750
+
 // void ds18b20_task (void *pvParameters) {
 
 //     float temperature;
@@ -57,8 +60,6 @@ bool ds18b20_probe() {
 }
 
 void ds18b20_task (void *pvParameters) {
-    onewire_init(GPIO_NUMBER_4);
-
     // int present = onewire_reset();
     // ESP_LOGI("1-WIRE", "Device present: %d", present);
 
@@ -73,7 +74,7 @@ void ds18b20_task (void *pvParameters) {
 
         onewire_write_byte(0xCC);
         onewire_write_byte(0x44);
-        vTaskDelay(pdMS_TO_TICKS(750));
+        vTaskDelay(pdMS_TO_TICKS(DS18B20_CONVERSION_MS));
 
         onewire_reset();
 
@@ -94,6 +95,7 @@ void ds18b20_task (void *pvParameters) {
         float temperature = raw_onewire_to_temp(scratchpad[1], scratchpad[0]);
         ESP_LOGI(DS18B20_TAG, "Data sent to queue: %f", temperature);
 
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        /* The conversion already took DS18B20_CONVERSION_MS, so the full cycle is DS18B20_INTERVAL_MS. */
+        vTaskDelay(pdMS_TO_TICKS(DS18B20_INTERVAL_MS - DS18B20_CONVERSION_MS));
     }
 }

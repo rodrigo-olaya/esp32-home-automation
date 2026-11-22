@@ -2,8 +2,8 @@
 #include "string.h"
 
 uint8_t crc8_sht31(const uint8_t *data, size_t len) {
-    
-    uint8_t crc;
+
+    uint8_t crc = 0xFF ^ data[0];
     
     for (int i = 0; i < len; i++) {
         // if (i == 1) {
@@ -11,7 +11,7 @@ uint8_t crc8_sht31(const uint8_t *data, size_t len) {
             // }
             for (int j = 0; j < 9; j++) {
                 if (i == 0 && j == 0) {
-                    crc = 0xFF ^ data[i];
+                    continue;
                 }
                 else if (j == 0) {
                     crc = crc ^ data[i];
@@ -31,13 +31,13 @@ uint8_t crc8_sht31(const uint8_t *data, size_t len) {
     }     // SHT3x: poly 0x31, init 0xFF, MSB first
 
 uint8_t crc8_ds18b20(const uint8_t *data, size_t len) {
-    
-    uint8_t crc;
+
+    uint8_t crc = 0x00 ^ data[0];
 
     for (int i = 0; i < len; i++) {
         for (int j = 0; j < 9; j++) {
             if (i == 0 && j == 0) {
-                crc = 0x00 ^ data[i];
+                continue;
             }
             else if (j == 0) {
                 crc = crc ^ data[i];

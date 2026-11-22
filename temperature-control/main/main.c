@@ -42,6 +42,8 @@ void app_main(void)
     // sht31_init();
     i2c_init();
 
+    onewire_init(GPIO_NUMBER_4);
+
     /* Initialize controls - tasks and receiver code */
     controls_init();
 }

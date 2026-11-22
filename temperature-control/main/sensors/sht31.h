@@ -6,6 +6,7 @@
 #include "esp_log.h"
 #include "../data/handle_humidity.h"
 #include "sensor_defines.h"
+#include "../data/crc.h"
 
 void sht31_init();
 bool sht31_probe();
