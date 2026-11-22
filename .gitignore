@@ -89,3 +89,6 @@ secrets*
 
 # Local-only: generator scripts, notes, backups
 local-files/
+
+# Bring-up programs: generated config (build/ is already ignored)
+bringup/*/sdkconfig

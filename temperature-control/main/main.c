@@ -14,9 +14,8 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 #include <inttypes.h>
-#include <portmacro.h>
 #include "esp_mac.h"
-// #include "sensors/thermistor.h"
+// #include "sensors/ds18b20.h"
 #include "control/control.h"
 #include "communication/queues.h"
 #include "WiFi/WiFi.h"
@@ -24,23 +23,13 @@
 #include "esp_log.h"
 #include "drivers/gpio_driver.h"
 #include "drivers/i2c_driver.h"
-#include "motors/nema17.h"
-#include "sensors/humidity_sensor.h"
-#include "motors/encoder.h"
-#include "sensors/thermistor.h"
-#ifdef MOTOR_SWITCH_TEST
-#include "motors/torque_test.h"
-#endif
+#include "sensors/sht31.h"
+#include "sensors/ds18b20.h"
 
 extern QueueHandle_t xSensorDataQueue;
 
 void app_main(void)
 {
-#ifdef MOTOR_SWITCH_TEST
-    /* Test build only (see main/CMakeLists.txt): keyboard-driven motor test, no WiFi or MQTT */
-    torque_test_console();
-#endif
-
     /* Initialize WiFi */
     WiFi_init();
 
@@ -50,8 +39,10 @@ void app_main(void)
     /* Initialize MQTT client once */
     mqtt_init();
 
-    // humidity_sensor_initialize();
+    // sht31_init();
     i2c_init();
+
+    onewire_init(GPIO_NUMBER_4);
 
     /* Initialize controls - tasks and receiver code */
     controls_init();

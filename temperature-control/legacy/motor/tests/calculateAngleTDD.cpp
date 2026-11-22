@@ -2,7 +2,7 @@
 #include "CppUTest/CommandLineTestRunner.h"
 
 extern "C" {
-    #include "../main/motors/handlers/calculate_angle.h"
+    #include "../handlers/calculate_angle.h"
 }
 
 TEST_GROUP(angleGroup)

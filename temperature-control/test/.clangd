@@ -1,0 +1,6 @@
+# The host tests are not part of any compile_commands.json, and must not borrow the ESP32 flags
+# from the firmware build next door. Tell clangd how they are built instead.
+CompileFlags:
+  CompilationDatabase: None
+  Compiler: /usr/bin/c++
+  Add: [-std=c++17, -I/usr/local/include]
