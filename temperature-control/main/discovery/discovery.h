@@ -2,8 +2,13 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-typedef enum { SENSOR_SHT31 = 1 << 0, SENSOR_DS18B20 = 1 << 1 } sensor_flag_t;
+typedef enum { 
+    SENSOR_SHT31 = 1 << 0, 
+    SENSOR_DS18B20 = 1 << 1 
+} sensor_flag_t;
+
 typedef bool (*probe_fn_t)(void);
+
 typedef struct { 
     probe_fn_t sht31; 
     probe_fn_t ds18b20; 
