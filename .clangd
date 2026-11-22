@@ -1,0 +1,7 @@
+CompileFlags:
+    Remove: [-f*, -m*]
+Diagnostics:
+  # The codebase uses umbrella-style includes (FreeRTOS.h, esp_log.h, ...), so these two
+  # checks would flag almost every include. Switch them back on to tidy includes.
+  UnusedIncludes: None
+  MissingIncludes: None
