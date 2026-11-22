@@ -14,7 +14,6 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 #include <inttypes.h>
-#include <portmacro.h>
 #include "esp_mac.h"
 // #include "sensors/thermistor.h"
 #include "control/control.h"

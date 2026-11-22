@@ -1,4 +1,5 @@
 #include "humidity_sensor.h"
+#include "../control/control.h"
 
 static const char *HUMIDITY_TAG = "SHT3x";
 uint8_t sht3x_addr = 0x44;
