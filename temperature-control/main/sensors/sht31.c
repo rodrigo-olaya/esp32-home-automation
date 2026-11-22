@@ -43,21 +43,24 @@ void sht31_task() {
         i2c_stop();
         ESP_LOGI(SHT31_TAG, "HUMIDITY MSB: %d, HUMIDITY LSB: %d", hum_msb, hum_lsb);
 
-        double humidity = bytes_to_humidity(hum_msb, hum_lsb);
-
-        sensorData_t sensor_data;
-        sensor_data.type = HUMIDITY;
-        sensor_data.data = humidity;
-
-        sensor_send_data(&sensor_data);
-        ESP_LOGI(SHT31_TAG, "Humidity: %f", sensor_data.data);
-
         i2c_unlock();
 
         uint8_t tempData[2] = { temp_msb, temp_lsb };
         uint8_t humData[2] = { hum_msb, hum_lsb };
         if (crc8_sht31(tempData, 2) == temp_crc && crc8_sht31(humData, 2) == hum_crc) {
+            double humidity = bytes_to_humidity(hum_msb, hum_lsb);
+
+            sensorData_t sensor_data;
+            sensor_data.type = HUMIDITY;
+            sensor_data.data = humidity;
+
+            sensor_send_data(&sensor_data);
+            ESP_LOGI(SHT31_TAG, "Humidity: %f", sensor_data.data);
+
             mark_sensor_seen(SENSOR_SHT31);
+        }
+        else {
+            ESP_LOGW(SHT31_TAG, "CRC check failed, reading discarded");
         }
 
         vTaskDelay(pdMS_TO_TICKS(SHT31_INTERVAL_MS));
