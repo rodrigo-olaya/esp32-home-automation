@@ -29,7 +29,7 @@ Requires [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/g
 ```
 cp main/config/private_config.h.example main/config/private_config.h   # then edit
 make build
-make flash PORT=/dev/cu.usbserial-0001    # flashes, then opens the monitor (Ctrl+] quits)
+make flash    # flashes, then opens the monitor (Ctrl+] quits); PORT=... overrides the default port
 ```
 
 `private_config.h` holds the WiFi credentials and broker address and is gitignored.
